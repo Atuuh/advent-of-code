@@ -1,0 +1,15 @@
+{
+    "files.exclude": {
+        ".vs": true,
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/CVS": true,
+        "**/node_modules": false,
+        "bin": true,
+        "obj": true,
+        "**/*.js": { "when": "$(basename).ts" }
+    },
+    "typescript.tsdk": "./src/node_modules/typescript/lib"
+}
