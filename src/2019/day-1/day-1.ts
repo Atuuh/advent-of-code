@@ -1,6 +1,6 @@
-import { Day, Solution } from "../../day";
+import { Day, Solution } from "#aoc/day";
+import { SumArray } from "#aoc/utils";
 import { Input } from "./input";
-import { SumArray } from "../../utils/arrays";
 
 export class DayOne implements Day {
     private readonly puzzleInput: number[] = [];

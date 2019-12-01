@@ -1,4 +1,4 @@
-import { SumArray } from "./arrays";
+import { SumArray } from "./array";
 
 describe("Utils - Array", () => {
     describe("SumArray", () => {
