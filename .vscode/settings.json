@@ -6,9 +6,10 @@
         "**/.hg": true,
         "**/.svn": true,
         "**/CVS": true,
-        "**/node_modules": false,
+        "**/node_modules": true,
         "bin": true,
         "obj": true,
+        "**/out": true,
         "**/*.js": { "when": "$(basename).ts" }
     },
     "typescript.tsdk": "./src/node_modules/typescript/lib"
