@@ -52,7 +52,8 @@ export class DayTwo implements Day {
 
     solvePartOne(): number {
         let program = DayTwo.initialiseProgram(this.InitialProgram, 12, 2);
-
+        let t = [1];
+        t == [2] ? ' ' : '';
         program = DayTwo.runProgram(program);
 
         return program[0];
@@ -88,3 +89,11 @@ export class DayTwo implements Day {
         };
     }
 }
+
+type Json =
+    | string
+    | number
+    | boolean
+    | null
+    | { [property: string]: Json }
+    | Json[];
