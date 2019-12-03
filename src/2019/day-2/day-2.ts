@@ -1,5 +1,5 @@
-import { Day, Solution } from '#aoc/day';
 import { Input } from '../day-2/input';
+import { Day, Solution } from 'models';
 
 export class DayTwo implements Day {
     private readonly InitialProgram: number[];
@@ -85,15 +85,7 @@ export class DayTwo implements Day {
         const partTwo = this.solvePartTwo();
         return {
             partOne,
-            partTwo
+            partTwo,
         };
     }
 }
-
-type Json =
-    | string
-    | number
-    | boolean
-    | null
-    | { [property: string]: Json }
-    | Json[];

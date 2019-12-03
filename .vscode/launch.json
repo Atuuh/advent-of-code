@@ -10,7 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/src/index.ts",
             "preLaunchTask": "typescript-build",
-            "outFiles": ["${workspaceFolder}/src/out/**/*.js"]
+            "outFiles": ["${workspaceFolder}/out/**/*.js"]
         }
     ]
 }

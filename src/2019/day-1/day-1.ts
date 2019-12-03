@@ -1,12 +1,12 @@
-import { Day, Solution } from "#aoc/day";
-import { SumArray } from "#aoc/utils";
-import { Input } from "./input";
+import { Input } from './input';
+import { Day, Solution } from 'models';
+import { SumArray } from 'utils';
 
 export class DayOne implements Day {
     private readonly puzzleInput: number[] = [];
 
     constructor() {
-        this.puzzleInput = Input.split("\n").map(Number);
+        this.puzzleInput = Input.split('\n').map(Number);
     }
 
     solvePartOne(): number {
@@ -26,7 +26,7 @@ export class DayOne implements Day {
 
         return {
             partOne,
-            partTwo
+            partTwo,
         };
     }
 
