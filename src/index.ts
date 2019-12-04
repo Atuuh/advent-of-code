@@ -1,5 +1,3 @@
-import { DayFour, isValidPassword } from './2019/day-4/day-4';
+import { DayFive } from './2019/day-5/day-5';
 
-isValidPassword(111111, 100000, 1000000);
-
-console.log(DayFour());
+console.log(DayFive());
