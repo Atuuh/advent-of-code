@@ -1,7 +1,6 @@
 import {
     isValidPassword,
     isValidExtraCriteria,
-    solvePartTwo,
     getChainLengths,
 } from './day-4';
 

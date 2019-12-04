@@ -8,9 +8,11 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/src/index.ts",
-            "preLaunchTask": "typescript-build",
-            "outFiles": ["${workspaceFolder}/out/**/*.js"]
+            "runtimeArgs": ["-r", "ts-node/register"],
+            "args": ["${workspaceFolder}/src/index.ts"],
+            "env": {
+                "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.app.json"
+            }
         }
     ]
 }

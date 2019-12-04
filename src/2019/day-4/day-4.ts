@@ -16,16 +16,17 @@ export const DayFour = (): Solution => {
 export const solvePartOne = (): number => {
     const [min, max] = Input;
     const passwordAttempts = IncrementalArray(max - min, min);
-    return passwordAttempts
-        .map(attempt => isValidPassword(attempt, min, max))
-        .filter(item => item === true).length;
+    return passwordAttempts.filter(attempt =>
+        isValidPassword(attempt, min, max)
+    ).length;
 };
 
 export const solvePartTwo = () => {
     const [min, max] = Input;
     const passwordAttempts = IncrementalArray(max - min, min);
-    return passwordAttempts.filter(item => isValidExtraCriteria(item, min, max))
-        .length;
+    return passwordAttempts.filter(attempt =>
+        isValidExtraCriteria(attempt, min, max)
+    ).length;
 };
 
 export const isValidExtraCriteria = (
@@ -40,7 +41,7 @@ export const isValidExtraCriteria = (
 };
 
 export const getChainLengths = (input: number): number[] => {
-    const t = {
+    const tracker = {
         running: new Array<number>(input.toString().length).fill(0),
         prevNum: -Infinity,
         index: -1,
@@ -50,17 +51,17 @@ export const getChainLengths = (input: number): number[] => {
         .split('')
         .map(Number);
     return array
-        .reduce((q, w) => {
-            if (q.prevNum === w) {
-                q.running[q.index] += 1;
+        .reduce((track, currentNum) => {
+            if (track.prevNum === currentNum) {
+                track.running[track.index] += 1;
             } else {
-                q.prevNum = w;
-                q.index += 1;
-                q.running[q.index] += 1;
+                track.prevNum = currentNum;
+                track.index += 1;
+                track.running[track.index] += 1;
             }
 
-            return q;
-        }, t)
+            return track;
+        }, tracker)
         .running.filter(item => item !== 0);
 };
 
@@ -90,12 +91,7 @@ export const isValidPassword = (
     }, 0);
     if (!increments) return false;
 
-    let doubleNumber = false;
-    numberArray.reduce((prevNumber, currentNumber) => {
-        doubleNumber = doubleNumber || currentNumber === prevNumber;
-        return currentNumber;
-    }, 0);
-    if (!doubleNumber) return false;
+    if (!getChainLengths(password).some(length => length >= 2)) return false;
 
     return true;
 };

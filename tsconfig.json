@@ -8,11 +8,7 @@
         "strict": true,
         "lib": ["esnext", "dom"],
         "moduleResolution": "node",
-        "baseUrl": "./",
-        "paths": {
-            "*": ["src/*", "node_modules/*"]
-        },
-        "esModuleInterop": true,
+        "baseUrl": "./src",
         "experimentalDecorators": true
     }
 }
