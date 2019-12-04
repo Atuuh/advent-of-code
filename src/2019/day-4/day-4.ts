@@ -1,5 +1,6 @@
 import { Solution } from '../../models';
-import { IncrementalArray } from '../../utils';
+import { getIncrementalArray } from '../../utils/array';
+import { isInRange } from '../../utils/number';
 
 const Input: [number, number] = [158126, 624574];
 
@@ -15,7 +16,7 @@ export const DayFour = (): Solution => {
 
 export const solvePartOne = (): number => {
     const [min, max] = Input;
-    const passwordAttempts = IncrementalArray(max - min, min);
+    const passwordAttempts = getIncrementalArray(max - min, min);
     return passwordAttempts.filter(attempt =>
         isValidPassword(attempt, min, max)
     ).length;
@@ -23,7 +24,7 @@ export const solvePartOne = (): number => {
 
 export const solvePartTwo = () => {
     const [min, max] = Input;
-    const passwordAttempts = IncrementalArray(max - min, min);
+    const passwordAttempts = getIncrementalArray(max - min, min);
     return passwordAttempts.filter(attempt =>
         isValidExtraCriteria(attempt, min, max)
     ).length;
@@ -63,14 +64,6 @@ export const getChainLengths = (input: number): number[] => {
             return track;
         }, tracker)
         .running.filter(item => item !== 0);
-};
-
-export const isInRange = (
-    password: number,
-    min: number,
-    max: number
-): boolean => {
-    return password >= min && password < max;
 };
 
 export const isValidPassword = (

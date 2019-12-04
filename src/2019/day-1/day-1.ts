@@ -1,6 +1,6 @@
 import { Input } from './input';
-import { Day, Solution } from 'models';
-import { SumArray } from 'utils';
+import { Day, Solution } from '../../models';
+import { sumArray } from '../../utils/array';
 
 export class DayOne implements Day {
     private readonly puzzleInput: number[] = [];
@@ -11,12 +11,12 @@ export class DayOne implements Day {
 
     solvePartOne(): number {
         const fuelAmounts = this.puzzleInput.map(DayOne.calculateFuel);
-        return SumArray(fuelAmounts);
+        return sumArray(fuelAmounts);
     }
 
     solvePartTwo(): number {
         const fuelLevels = this.puzzleInput.map(DayOne.calculateInclusiveFuel);
-        return SumArray(fuelLevels);
+        return sumArray(fuelLevels);
     }
 
     solve(): Solution {
