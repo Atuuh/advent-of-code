@@ -7,3 +7,11 @@ export const getIncrementalArray = (
 ): number[] => {
     return new Array(size).fill(0).map((_, index) => index + startNumber);
 };
+
+export const getLast = <T>(array: T[]) => {
+    return array.slice(-1)[0];
+};
+
+export const getFirst = <T>(array: T[]) => {
+    return array[0];
+};

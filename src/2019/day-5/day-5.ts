@@ -1,8 +1,17 @@
 import { Solution } from '../../models';
+import { IntcodeComputer } from '../shared/intcode-computer';
+import { Input } from './input';
+import { getLast } from '../../utils/array';
 
 export const DayFive = (): Solution => {
-    const partOne = 0;
-    const partTwo = 0;
+    const input = Input.split(',').map(Number);
+    let ic = new IntcodeComputer(input);
+    const result = ic.run(1);
+    const partOne = getLast(result.output);
+
+    ic = new IntcodeComputer(input);
+    const result2 = ic.run(5);
+    const partTwo = getLast(result2.output);
 
     return {
         partOne,
