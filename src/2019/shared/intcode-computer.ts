@@ -1,20 +1,30 @@
 export class IntcodeComputer {
+    private instructionPointer = 0;
+    program: number[];
+    output: number[] = new Array<number>();
+
     constructor(
-        private readonly program: number[],
+        private readonly initialProgram: number[],
         options?: { noun: number; verb: number }
     ) {
+        this.program = initialProgram.slice();
         if (options)
-            this.program = this.initialiseProgram(options.noun, options.verb);
+            this.initialProgram = this.initialiseProgram(
+                options.noun,
+                options.verb
+            );
     }
 
     initialiseProgram(noun: number, verb: number): number[] {
-        const array = this.program.slice();
+        const array = this.initialProgram.slice();
         array[1] = noun;
         array[2] = verb;
         return array;
     }
 
-    getInstruction(instructionCode: number) {
+    getNextInstruction() {
+        const instructionCode = this.program[this.instructionPointer];
+
         const asArray = instructionCode
             .toString()
             .padStart(5, '0')
@@ -39,165 +49,156 @@ export class IntcodeComputer {
     }
 
     run(input: number = 0): ExecutedProgram {
-        const program = this.program.slice();
-        const output: number[] = [];
-
-        let index = 0;
+        this.instructionPointer = 0;
+        this.program = this.initialProgram.slice();
+        this.output = [];
 
         while (true) {
-            const { opCode, parameterModes } = this.getInstruction(
-                program[index]
-            );
-            let result;
+            const { opCode, parameterModes } = this.getNextInstruction();
             switch (opCode) {
                 case Instruction.Halt:
-                    return { program, output };
+                    return { program: this.program, output: this.output };
                 case Instruction.Add:
-                    result = this.doAddition(program, index, parameterModes);
-
-                    program[result.targetIndex] = result.value;
-                    index += result.moveIndex;
+                    this.performAddition(parameterModes);
                     break;
                 case Instruction.Multiply:
-                    result = this.doMultiplication(
-                        program,
-                        index,
-                        parameterModes
-                    );
-
-                    program[result.targetIndex] = result.value;
-                    index += result.moveIndex;
+                    this.performMultiplication(parameterModes);
                     break;
                 case Instruction.Set:
-                    program[program[index + 1]] = input;
-                    index += 2;
+                    this.performSet(input);
                     break;
                 case Instruction.Output:
-                    output.push(program[program[index + 1]]);
-                    index += 2;
+                    this.performOutput(parameterModes);
                     break;
                 case Instruction.TrueJump:
-                    const tjmp = this.getParameter(
-                        program,
-                        index + 1,
-                        parameterModes[0]
-                    );
-                    index =
-                        tjmp !== 0
-                            ? this.getParameter(
-                                  program,
-                                  index + 2,
-                                  parameterModes[1]
-                              )
-                            : index + 3;
-
+                    this.performTrueJump(parameterModes);
                     break;
                 case Instruction.FalseJump:
-                    const fjmp = this.getParameter(
-                        program,
-                        index + 1,
-                        parameterModes[0]
-                    );
-                    index =
-                        fjmp === 0
-                            ? this.getParameter(
-                                  program,
-                                  index + 2,
-                                  parameterModes[1]
-                              )
-                            : index + 3;
-
+                    this.performFalseJump(parameterModes);
                     break;
                 case Instruction.LessThan:
-                    const left = this.getParameter(
-                        program,
-                        index + 1,
-                        parameterModes[0]
-                    );
-                    const right = this.getParameter(
-                        program,
-                        index + 2,
-                        parameterModes[1]
-                    );
-                    program[program[index + 3]] = left < right ? 1 : 0;
-                    index += 4;
+                    this.performLessThan(parameterModes);
                     break;
                 case Instruction.Equals:
-                    const eleft = this.getParameter(
-                        program,
-                        index + 1,
-                        parameterModes[0]
-                    );
-                    const eright = this.getParameter(
-                        program,
-                        index + 2,
-                        parameterModes[1]
-                    );
-                    program[program[index + 3]] = eleft === eright ? 1 : 0;
-                    index += 4;
+                    this.performEquals(parameterModes);
                     break;
+                default:
+                    throw Error(`Opcode is invalid!: ${opCode}`);
             }
         }
     }
 
-    getParameter(program: number[], index: number, mode: ParameterMode) {
+    getParameter(index: number, mode: ParameterMode) {
         return mode === ParameterMode.Position
-            ? program[program[index]]
-            : program[index];
+            ? this.program[this.program[index]]
+            : this.program[index];
     }
 
-    doMultiplication(
-        program: number[],
-        index: number,
-        parameterModes: ParameterMode[]
-    ) {
+    performEquals(parameterModes: ParameterMode[]) {
+        const left = this.getParameter(
+            this.instructionPointer + 1,
+            parameterModes[0]
+        );
+        const right = this.getParameter(
+            this.instructionPointer + 2,
+            parameterModes[1]
+        );
+        this.program[this.program[this.instructionPointer + 3]] =
+            left === right ? 1 : 0;
+
+        this.instructionPointer += 4;
+    }
+
+    performLessThan(parameterModes: ParameterMode[]) {
+        const left = this.getParameter(
+            this.instructionPointer + 1,
+            parameterModes[0]
+        );
+        const right = this.getParameter(
+            this.instructionPointer + 2,
+            parameterModes[1]
+        );
+        this.program[this.program[this.instructionPointer + 3]] =
+            left < right ? 1 : 0;
+
+        this.instructionPointer += 4;
+    }
+
+    performFalseJump(parameterModes: ParameterMode[]) {
+        const check = this.getParameter(
+            this.instructionPointer + 1,
+            parameterModes[0]
+        );
+        const value = this.getParameter(
+            this.instructionPointer + 2,
+            parameterModes[1]
+        );
+        this.instructionPointer =
+            check === 0 ? value : this.instructionPointer + 3;
+    }
+
+    performTrueJump(parameterModes: ParameterMode[]) {
+        const check = this.getParameter(
+            this.instructionPointer + 1,
+            parameterModes[0]
+        );
+        const value = this.getParameter(
+            this.instructionPointer + 2,
+            parameterModes[1]
+        );
+        this.instructionPointer =
+            check !== 0 ? value : this.instructionPointer + 3;
+    }
+
+    performOutput(parameterModes: ParameterMode[]) {
+        const output =
+            parameterModes[0] === ParameterMode.Position
+                ? this.program[this.program[this.instructionPointer + 1]]
+                : this.program[this.instructionPointer + 1];
+        this.output.push(output);
+        this.instructionPointer += 2;
+    }
+
+    performSet(input: number) {
+        this.program[this.program[this.instructionPointer + 1]] = input;
+        this.instructionPointer += 2;
+    }
+
+    performMultiplication(parameterModes: ParameterMode[]) {
         const a =
             parameterModes[0] === ParameterMode.Position
-                ? program[program[index + 1]]
-                : program[index + 1];
+                ? this.program[this.program[this.instructionPointer + 1]]
+                : this.program[this.instructionPointer + 1];
         const b =
             parameterModes[1] === ParameterMode.Position
-                ? program[program[index + 2]]
-                : program[index + 2];
-        const targetIndex =
-            parameterModes[2] === ParameterMode.Position
-                ? program[index + 3]
-                : index + 3;
+                ? this.program[this.program[this.instructionPointer + 2]]
+                : this.program[this.instructionPointer + 2];
+        const targetIndex = this.program[this.instructionPointer + 3];
 
         const value = a * b;
 
-        return {
-            targetIndex,
-            value,
-            moveIndex: 4,
-        };
+        this.program[targetIndex] = value;
+        this.instructionPointer += 4;
     }
 
-    doAddition(
-        program: number[],
-        index: number,
-        parameterModes: ParameterMode[]
-    ) {
+    performAddition(parameterModes: ParameterMode[]) {
         const a =
             parameterModes[0] === ParameterMode.Position
-                ? program[program[index + 1]]
-                : program[index + 1];
+                ? this.program[this.program[this.instructionPointer + 1]]
+                : this.program[this.instructionPointer + 1];
         const b =
             parameterModes[1] === ParameterMode.Position
-                ? program[program[index + 2]]
-                : program[index + 2];
+                ? this.program[this.program[this.instructionPointer + 2]]
+                : this.program[this.instructionPointer + 2];
         const targetIndex =
             parameterModes[2] === ParameterMode.Position
-                ? program[index + 3]
-                : index + 3;
+                ? this.program[this.instructionPointer + 3]
+                : this.instructionPointer + 3;
 
         const value = a + b;
 
-        return {
-            targetIndex,
-            value,
-            moveIndex: 4,
-        };
+        this.program[targetIndex] = value;
+        this.instructionPointer += 4;
     }
 }
 

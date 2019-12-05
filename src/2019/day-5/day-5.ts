@@ -5,11 +5,11 @@ import { getLast } from '../../utils/array';
 
 export const DayFive = (): Solution => {
     const input = Input.split(',').map(Number);
-    let ic = new IntcodeComputer(input);
+    let ic = new IntcodeComputer([...input]);
+
     const result = ic.run(1);
     const partOne = getLast(result.output);
 
-    ic = new IntcodeComputer(input);
     const result2 = ic.run(5);
     const partTwo = getLast(result2.output);
 
