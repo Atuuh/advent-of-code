@@ -9,6 +9,7 @@
         "lib": ["esnext", "dom"],
         "moduleResolution": "node",
         "baseUrl": "./src",
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "downlevelIteration": true
     }
 }
