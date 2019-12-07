@@ -32,7 +32,7 @@ describe('2019 - Shared', () => {
 
         test('set', () => {
             const ic = new IntcodeComputer([3, 0, 99]);
-            const result = ic.run(50);
+            const result = ic.run([50]);
             const expected: ExecutedProgram = {
                 output: [],
                 program: [50, 0, 99],
@@ -56,7 +56,7 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run(8);
+                    const result = ic.run([8]);
                     expect(result.output).toEqual([1]);
                 });
                 test('false', () => {
@@ -73,7 +73,7 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run(7);
+                    const result = ic.run([7]);
                     expect(result.output).toEqual([0]);
                 });
             });
@@ -90,7 +90,7 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run(8);
+                    const result = ic.run([8]);
                     expect(result.output).toEqual([1]);
                 });
                 test('false', () => {
@@ -105,7 +105,7 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run(7);
+                    const result = ic.run([7]);
                     expect(result.output).toEqual([0]);
                 });
             });
@@ -127,7 +127,7 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run(7);
+                    const result = ic.run([7]);
                     expect(result.output).toEqual([1]);
                 });
                 test('false', () => {
@@ -144,7 +144,7 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run(8);
+                    const result = ic.run([8]);
                     expect(result.output).toEqual([0]);
                 });
             });
@@ -161,7 +161,7 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run(7);
+                    const result = ic.run([7]);
                     expect(result.output).toEqual([1]);
                 });
 
@@ -177,7 +177,7 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run(8);
+                    const result = ic.run([8]);
                     expect(result.output).toEqual([0]);
                 });
             });
@@ -204,7 +204,7 @@ describe('2019 - Shared', () => {
                         1,
                         9,
                     ]);
-                    const result = ic.run(1);
+                    const result = ic.run([1]);
                     expect(result.output).toEqual([1]);
                 });
                 test('zero', () => {
@@ -226,7 +226,7 @@ describe('2019 - Shared', () => {
                         1,
                         9,
                     ]);
-                    const result = ic.run(0);
+                    const result = ic.run([0]);
                     expect(result.output).toEqual([0]);
                 });
             });
@@ -284,17 +284,17 @@ describe('2019 - Shared', () => {
             ];
             test('Example 1', () => {
                 const ic = new IntcodeComputer(input);
-                const result = ic.run(5);
+                const result = ic.run([5]);
                 expect(result.output).toEqual([999]);
             });
             test('Example 2', () => {
                 const ic = new IntcodeComputer(input);
-                const result = ic.run(8);
+                const result = ic.run([8]);
                 expect(result.output).toEqual([1000]);
             });
             test('Example 3', () => {
                 const ic = new IntcodeComputer(input);
-                const result = ic.run(15);
+                const result = ic.run([15]);
                 expect(result.output).toEqual([1001]);
             });
         });

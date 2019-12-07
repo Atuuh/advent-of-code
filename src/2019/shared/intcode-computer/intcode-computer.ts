@@ -48,7 +48,7 @@ export class IntcodeComputer {
         };
     }
 
-    run(input: number = 0): ExecutedProgram {
+    run(inputs: number[] = []): ExecutedProgram {
         this.instructionPointer = 0;
         this.program = this.initialProgram.slice();
         this.output = [];
@@ -65,7 +65,7 @@ export class IntcodeComputer {
                     this.performMultiplication(parameterModes);
                     break;
                 case Instruction.Set:
-                    this.performSet(input);
+                    this.performSet(inputs.shift() as number);
                     break;
                 case Instruction.Output:
                     this.performOutput(parameterModes);
