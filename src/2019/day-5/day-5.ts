@@ -1,5 +1,5 @@
 import { Solution } from '../../models';
-import { IntcodeComputer } from '../shared/intcode-computer';
+import { IntcodeComputer } from '../shared/intcode-computer/intcode-computer';
 import { Input } from './input';
 import { getLast } from '../../utils/array';
 

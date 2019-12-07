@@ -1,7 +1,7 @@
-import { Node } from './day-6';
+import { TreeNode } from './tree-node';
 
-describe('2019 - Day Six', () => {
-    describe('Node', () => {
+describe('2019 - Shared', () => {
+    describe('Tree Node', () => {
         test('root', () => {
             const graph = createGraph();
             expect(graph.root.name).toBe('a');
@@ -33,11 +33,11 @@ describe('2019 - Day Six', () => {
 });
 
 const createGraph = () => {
-    const a = new Node('a');
-    const b = new Node('b', a);
-    const c = new Node('c', a);
-    const d = new Node('d', c);
-    const e = new Node('e', d);
-    const f = new Node('f', b);
+    const a = new TreeNode('a');
+    const b = new TreeNode('b', a);
+    const c = new TreeNode('c', a);
+    const d = new TreeNode('d', c);
+    const e = new TreeNode('e', d);
+    const f = new TreeNode('f', b);
     return f;
 };

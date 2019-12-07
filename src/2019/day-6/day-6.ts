@@ -1,70 +1,33 @@
 import { Input } from './input';
+import { TreeNode } from '../shared/tree-node/tree-node';
 
-export class Node {
-    name: string;
-    parent: Node | undefined;
-    children: Node[];
-
-    constructor(name: string, parent?: Node, children?: Node[]) {
-        this.name = name;
-        this.parent = parent;
-        this.children = children ?? [];
-
-        if (this.parent && !this.parent.children.includes(this)) {
-            this.parent.children.push(this);
-        }
-    }
-
-    get root(): Node {
-        return this.parent ? this.parent.root : this;
-    }
-
-    getDistanceToRoot(): number {
-        return this.parent ? this.parent.getDistanceToRoot() + 1 : 0;
-    }
-
-    *traverse(): Generator<Node> {
-        function* helper(node: Node): Generator<Node> {
-            yield node;
-            for (const child of node.children) {
-                yield* helper(child);
-            }
-        }
-        yield* helper(this.root);
-    }
-
-    find(name: string): Node | undefined {
-        for (const node of this.traverse()) {
-            if (node.name === name) {
-                return node;
-            }
-        }
-    }
-}
-const createGraph = (orbits: [string, string][], firstNode = 'COM'): Node => {
+const createGraph = (
+    orbits: [string, string][],
+    firstNode = 'COM'
+): TreeNode => {
     const addNode = (targetNode: string) => {
         orbits
             .filter(([target, _]) => target === targetNode)
             .forEach(([target, orbiter]) => {
                 const parent = graph.find(target);
-                new Node(orbiter, parent);
+                new TreeNode(orbiter, parent);
                 addNode(orbiter);
             });
     };
-    const graph = new Node(firstNode);
+    const graph = new TreeNode(firstNode);
     addNode(firstNode);
     return graph;
 };
 
 const getDistanceBetweenNodes = (
-    graph: Node,
+    graph: TreeNode,
     start: string,
     end: string
 ): number => {
-    const startNode = graph.find(start) as Node;
+    const startNode = graph.find(start) as TreeNode;
 
     let distance = 0;
-    let searchedNodes = new Array<Node>();
+    let searchedNodes = new Array<TreeNode>();
     let nodesToSearch = [startNode];
 
     while (true) {
@@ -78,7 +41,7 @@ const getDistanceBetweenNodes = (
             .flatMap(node => [node.parent, ...node.children])
             .filter(node =>
                 node ? !searchedNodes.includes(node) : false
-            ) as Node[];
+            ) as TreeNode[];
     }
 
     return distance - 2;
