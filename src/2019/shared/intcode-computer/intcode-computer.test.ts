@@ -10,36 +10,6 @@ describe('2019 - Shared', () => {
             });
         });
 
-        test('add', () => {
-            const ic = new IntcodeComputer([10001, 1, 1, 0, 99]);
-            const result = ic.run();
-            const expected: ExecutedProgram = {
-                output: [],
-                program: [10001, 1, 1, 2, 99],
-            };
-            expect(result).toEqual(expected);
-        });
-
-        test('multiply', () => {
-            const ic = new IntcodeComputer([1002, 4, 3, 4, 33]);
-            const result = ic.run();
-            const expected: ExecutedProgram = {
-                output: [],
-                program: [1002, 4, 3, 4, 99],
-            };
-            expect(result).toEqual(expected);
-        });
-
-        test('set', () => {
-            const ic = new IntcodeComputer([3, 0, 99]);
-            const result = ic.run([50]);
-            const expected: ExecutedProgram = {
-                output: [],
-                program: [50, 0, 99],
-            };
-            expect(result).toEqual(expected);
-        });
-
         describe('equal', () => {
             describe('position mode', () => {
                 test('true', () => {
@@ -56,8 +26,11 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run([8]);
-                    expect(result.output).toEqual([1]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(8);
+                    const result = runner.next().value;
+                    expect(result).toEqual(1);
                 });
                 test('false', () => {
                     const ic = new IntcodeComputer([
@@ -73,8 +46,11 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run([7]);
-                    expect(result.output).toEqual([0]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(7);
+                    const result = runner.next().value;
+                    expect(result).toEqual(0);
                 });
             });
             describe('position mode', () => {
@@ -90,8 +66,11 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run([8]);
-                    expect(result.output).toEqual([1]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(8);
+                    const result = runner.next().value;
+                    expect(result).toEqual(1);
                 });
                 test('false', () => {
                     const ic = new IntcodeComputer([
@@ -105,8 +84,11 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run([7]);
-                    expect(result.output).toEqual([0]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(7);
+                    const result = runner.next().value;
+                    expect(result).toEqual(0);
                 });
             });
         });
@@ -127,8 +109,11 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run([7]);
-                    expect(result.output).toEqual([1]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(7);
+                    const result = runner.next().value;
+                    expect(result).toEqual(1);
                 });
                 test('false', () => {
                     const ic = new IntcodeComputer([
@@ -144,8 +129,11 @@ describe('2019 - Shared', () => {
                         -1,
                         8,
                     ]);
-                    const result = ic.run([8]);
-                    expect(result.output).toEqual([0]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(8);
+                    const result = runner.next().value;
+                    expect(result).toEqual(0);
                 });
             });
             describe('immediate mode', () => {
@@ -161,8 +149,11 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run([7]);
-                    expect(result.output).toEqual([1]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(7);
+                    const result = runner.next().value;
+                    expect(result).toEqual(1);
                 });
 
                 test('false', () => {
@@ -177,8 +168,11 @@ describe('2019 - Shared', () => {
                         3,
                         99,
                     ]);
-                    const result = ic.run([8]);
-                    expect(result.output).toEqual([0]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(8);
+                    const result = runner.next().value;
+                    expect(result).toEqual(0);
                 });
             });
         });
@@ -204,8 +198,11 @@ describe('2019 - Shared', () => {
                         1,
                         9,
                     ]);
-                    const result = ic.run([1]);
-                    expect(result.output).toEqual([1]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(1);
+                    const result = runner.next().value;
+                    expect(result).toEqual(1);
                 });
                 test('zero', () => {
                     const ic = new IntcodeComputer([
@@ -226,8 +223,11 @@ describe('2019 - Shared', () => {
                         1,
                         9,
                     ]);
-                    const result = ic.run([0]);
-                    expect(result.output).toEqual([0]);
+                    const runner = ic.run();
+                    runner.next();
+                    runner.next(0);
+                    const result = runner.next().value;
+                    expect(result).toEqual(0);
                 });
             });
         });
@@ -284,18 +284,27 @@ describe('2019 - Shared', () => {
             ];
             test('Example 1', () => {
                 const ic = new IntcodeComputer(input);
-                const result = ic.run([5]);
-                expect(result.output).toEqual([999]);
+                const runner = ic.run();
+                runner.next();
+                runner.next(5);
+                const result = runner.next().value;
+                expect(result).toEqual(999);
             });
             test('Example 2', () => {
                 const ic = new IntcodeComputer(input);
-                const result = ic.run([8]);
-                expect(result.output).toEqual([1000]);
+                const runner = ic.run();
+                runner.next();
+                runner.next(8);
+                const result = runner.next().value;
+                expect(result).toEqual(1000);
             });
             test('Example 3', () => {
                 const ic = new IntcodeComputer(input);
-                const result = ic.run([15]);
-                expect(result.output).toEqual([1001]);
+                const runner = ic.run();
+                runner.next();
+                runner.next(15);
+                const result = runner.next().value;
+                expect(result).toEqual(1001);
             });
         });
     });

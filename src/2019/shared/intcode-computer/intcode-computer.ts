@@ -1,7 +1,7 @@
 export class IntcodeComputer {
     private instructionPointer = 0;
     program: number[];
-    output: number[] = new Array<number>();
+    output = 0;
 
     constructor(
         private readonly initialProgram: number[],
@@ -48,16 +48,17 @@ export class IntcodeComputer {
         };
     }
 
-    run(inputs: number[] = []): ExecutedProgram {
+    *run(): Generator<number, number, number> {
         this.instructionPointer = 0;
         this.program = this.initialProgram.slice();
-        this.output = [];
+        this.output = 0;
+        let input;
 
         while (true) {
             const { opCode, parameterModes } = this.getNextInstruction();
             switch (opCode) {
                 case Instruction.Halt:
-                    return { program: this.program, output: this.output };
+                    return this.output;
                 case Instruction.Add:
                     this.performAddition(parameterModes);
                     break;
@@ -65,10 +66,12 @@ export class IntcodeComputer {
                     this.performMultiplication(parameterModes);
                     break;
                 case Instruction.Set:
-                    this.performSet(inputs.shift() as number);
+                    input = yield -1;
+                    this.performSet(input);
                     break;
                 case Instruction.Output:
                     this.performOutput(parameterModes);
+                    yield this.output;
                     break;
                 case Instruction.TrueJump:
                     this.performTrueJump(parameterModes);
@@ -155,7 +158,7 @@ export class IntcodeComputer {
             parameterModes[0] === ParameterMode.Position
                 ? this.program[this.program[this.instructionPointer + 1]]
                 : this.program[this.instructionPointer + 1];
-        this.output.push(output);
+        this.output = output;
         this.instructionPointer += 2;
     }
 

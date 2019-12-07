@@ -1,5 +1,5 @@
 import { Solution } from '../../models';
-import { getIncrementalArray } from '../../utils/array';
+import { getIncrementalArray, getLast } from '../../utils/array';
 import { Input } from './input';
 import { IntcodeComputer } from '../shared/intcode-computer/intcode-computer';
 
@@ -8,7 +8,7 @@ export const DaySeven = (): Solution => {
 
     const partOne = solvePartOne(program);
 
-    const partTwo = 0;
+    const partTwo = solvePartTwo(program);
 
     return { partOne, partTwo };
 };
@@ -37,6 +37,46 @@ const solvePartOne = (program: number[]) => {
     return Math.max(...thrusterValues);
 };
 
+const solvePartTwo = (program: number[]) => {
+    const ampValues = getIncrementalArray(5, 5);
+    const ampMap = [
+        ampValues.slice(),
+        ampValues.slice(),
+        ampValues.slice(),
+        ampValues.slice(),
+        ampValues.slice(),
+    ];
+    const permutations = getArrayPermutations(...ampMap) as PhaseSequence[];
+    const targets = permutations.filter(
+        item =>
+            item.includes(5) &&
+            item.includes(6) &&
+            item.includes(7) &&
+            item.includes(8) &&
+            item.includes(9)
+    );
+    const thrusterValues = targets.map(permutation => {
+        const amps = permutation.map(phase => {
+            const amp = new IntcodeComputer(program).run();
+            amp.next();
+            const state = amp.next(phase);
+            return { amp, state };
+        });
+        let power = 0;
+
+        while (!getLast(amps).state.done) {
+            for (const amp of amps) {
+                const out = amp.amp.next(power);
+                amp.state = amp.amp.next();
+                power = out.value;
+            }
+        }
+
+        return power;
+    });
+    return Math.max(...thrusterValues);
+};
+
 export const getThrusterSignal = (
     program: number[],
     sequence: PhaseSequence
@@ -44,20 +84,30 @@ export const getThrusterSignal = (
     const [a, b, c, d, e] = sequence;
     const computer = new IntcodeComputer(program);
 
-    let aResult = computer.run([a, 0]);
-    const [aOutput] = aResult.output;
+    let runner = computer.run();
+    runner.next();
+    runner.next(a);
+    let aOutput = runner.next(0).value;
 
-    let bResult = computer.run([b, aOutput]);
-    const [bOutput] = bResult.output;
+    runner = computer.run();
+    runner.next();
+    runner.next(b);
+    let bOutput = runner.next(aOutput).value;
 
-    let cResult = computer.run([c, bOutput]);
-    const [cOutput] = cResult.output;
+    runner = computer.run();
+    runner.next();
+    runner.next(c);
+    let cOutput = runner.next(bOutput).value;
 
-    let dResult = computer.run([d, cOutput]);
-    const [dOutput] = dResult.output;
+    runner = computer.run();
+    runner.next();
+    runner.next(d);
+    let dOutput = runner.next(cOutput).value;
 
-    let eResult = computer.run([e, dOutput]);
-    const [eOutput] = eResult.output;
+    runner = computer.run();
+    runner.next();
+    runner.next(e);
+    let eOutput = runner.next(dOutput).value;
 
     return eOutput;
 };
