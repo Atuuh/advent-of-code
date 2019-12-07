@@ -12,7 +12,10 @@
             "args": ["${workspaceFolder}/src/index.ts"],
             "env": {
                 "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.app.json"
-            }
+            },
+            "cwd": "${workspaceFolder}",
+            "protocol": "inspector",
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }
