@@ -1,5 +1,5 @@
 import { Day, Solution } from '#models';
-import { sumArray } from '#utils/array';
+import { sum } from '#utils/array/reducers';
 import { Input } from './input';
 
 export class DayOne implements Day {
@@ -11,12 +11,12 @@ export class DayOne implements Day {
 
     solvePartOne(): number {
         const fuelAmounts = this.puzzleInput.map(DayOne.calculateFuel);
-        return sumArray(fuelAmounts);
+        return fuelAmounts.reduce(sum);
     }
 
     solvePartTwo(): number {
         const fuelLevels = this.puzzleInput.map(DayOne.calculateInclusiveFuel);
-        return sumArray(fuelLevels);
+        return fuelLevels.reduce(sum);
     }
 
     solve(): Solution {

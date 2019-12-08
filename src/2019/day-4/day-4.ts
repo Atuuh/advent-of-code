@@ -1,5 +1,5 @@
 import { Solution } from '#models';
-import { getIncrementalArray } from '#utils/array';
+import { getIncrementalArray } from '#utils/array/generation';
 import { isInRange } from '#utils/number';
 
 const Input: [number, number] = [158126, 624574];

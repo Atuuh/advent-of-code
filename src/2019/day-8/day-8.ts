@@ -1,4 +1,5 @@
 import { Solution } from '#models';
+import { transpose, chunk } from '#utils/array/transformations';
 import { Input } from './input';
 
 export const DayEight = (): Solution => {
@@ -25,7 +26,8 @@ export const DayEight = (): Solution => {
     const joinedLines = lines.map(line => line.map(format).join(''));
     const output = joinedLines.join('\n');
     const partTwo = '^ look up ^';
-    console.log(output);
+
+    log(output);
 
     return { partOne, partTwo };
 };
@@ -33,22 +35,12 @@ export const DayEight = (): Solution => {
 const getVisiblePixelValue = (layerPixels: number[]) =>
     layerPixels.reduce((final, value) => (final === 2 ? value : final));
 
-const chunk = (array: number[], length: number) => {
-    const chunks = [];
-    for (let i = 0; i < array.length; i += length) {
-        chunks.push(array.slice(i, i + length));
-    }
-    return chunks;
-};
-
 const format = (value: number) => {
-    if (value === 2) {
-        return ' ';
-    } else if (value === 1) {
+    if (value === 1) {
         return '⬜';
-    } else {
+    } else if (value === 0) {
         return '⬛';
-    }
+    } else return '';
 };
 
 export const decodeImage = (
@@ -68,8 +60,4 @@ export const decodeImage = (
 const equals = (searchValue: number) => (value: number) =>
     value === searchValue;
 
-const getValueCount = (searchValue: number) => (count: number, value: number) =>
-    value === searchValue ? count + 1 : count;
-
-export const transpose = (array: number[][]) =>
-    array[0].map((column, index) => array.map(row => row[index]));
+const log = console.log;

@@ -1,5 +1,5 @@
 import { Solution } from '#models';
-import { getIncrementalArray, getLast } from '#utils/array';
+import { getIncrementalArray } from '#utils/array/generation';
 import { IntcodeComputer } from '#shared/intcode-computer';
 import { Input } from './input';
 
@@ -64,7 +64,7 @@ const solvePartTwo = (program: number[]) => {
         });
         let power = 0;
 
-        while (!getLast(amps).state.done) {
+        while (!amps.slice(-1)[0].state.done) {
             for (const amp of amps) {
                 const out = amp.amp.next(power);
                 amp.state = amp.amp.next();
