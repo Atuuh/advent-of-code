@@ -1,7 +1,7 @@
-import { Solution } from '../../models';
-import { getIncrementalArray, getLast } from '../../utils/array';
+import { Solution } from '#models';
+import { getIncrementalArray, getLast } from '#utils/array';
+import { IntcodeComputer } from '#shared/intcode-computer';
 import { Input } from './input';
-import { IntcodeComputer } from '../shared/intcode-computer/intcode-computer';
 
 export const DaySeven = (): Solution => {
     const program = Input.split(',').map(Number);

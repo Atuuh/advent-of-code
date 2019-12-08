@@ -1,5 +1,6 @@
+import { TreeNode } from '#shared/tree-node';
 import { Input } from './input';
-import { TreeNode } from '../shared/tree-node/tree-node';
+import { Solution } from '#models';
 
 const createGraph = (
     orbits: [string, string][],
@@ -47,7 +48,7 @@ const getDistanceBetweenNodes = (
     return distance - 2;
 };
 
-export const DaySix = () => {
+export const DaySix = (): Solution => {
     const input = Input.split('\n');
     const orbits: [string, string][] = input.map(
         line => line.split(')') as [string, string]

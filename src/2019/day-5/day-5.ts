@@ -1,17 +1,20 @@
-import { Solution } from '../../models';
-import { IntcodeComputer } from '../shared/intcode-computer/intcode-computer';
+import { Solution } from '#models';
+import { IntcodeComputer } from '#shared/intcode-computer';
 import { Input } from './input';
-import { getLast } from '../../utils/array';
 
 export const DayFive = (): Solution => {
     const input = Input.split(',').map(Number);
     let ic = new IntcodeComputer([...input]);
 
-    const result = ic.run(1);
-    const partOne = getLast(result.output);
+    let runner = ic.run();
+    runner.next();
+    runner.next(1);
+    const partOne = runner.next().value;
 
-    const result2 = ic.run(5);
-    const partTwo = getLast(result2.output);
+    runner = ic.run();
+    runner.next();
+    runner.next(5);
+    const partTwo = runner.next().value;
 
     return {
         partOne,

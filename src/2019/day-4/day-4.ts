@@ -1,6 +1,6 @@
-import { Solution } from '../../models';
-import { getIncrementalArray } from '../../utils/array';
-import { isInRange } from '../../utils/number';
+import { Solution } from '#models';
+import { getIncrementalArray } from '#utils/array';
+import { isInRange } from '#utils/number';
 
 const Input: [number, number] = [158126, 624574];
 

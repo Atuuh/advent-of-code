@@ -1,5 +1,5 @@
 import { Input } from './input';
-import { Solution } from 'models';
+import { Solution } from '#models';
 
 export const DayThree = (): Solution => {
     let wires = Input.split('\n').map(wire => wire.split(','));

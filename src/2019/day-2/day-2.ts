@@ -1,5 +1,5 @@
 import { Input } from '../day-2/input';
-import { Day, Solution } from 'models';
+import { Day, Solution } from '#models';
 
 export class DayTwo implements Day {
     private readonly InitialProgram: number[];

@@ -1,6 +1,6 @@
+import { Day, Solution } from '#models';
+import { sumArray } from '#utils/array';
 import { Input } from './input';
-import { Day, Solution } from '../../models';
-import { sumArray } from '../../utils/array';
 
 export class DayOne implements Day {
     private readonly puzzleInput: number[] = [];

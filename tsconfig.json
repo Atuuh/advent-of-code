@@ -1,15 +1,25 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "lib": ["es2019"],
         "module": "commonjs",
-        "outDir": "out",
-        "importHelpers": true,
+        "target": "es2019",
+        "rootDir": "./src/",
+        "outDir": "./dist/",
         "sourceMap": true,
-        "strict": true,
-        "lib": ["esnext", "dom"],
+        "declaration": false,
         "moduleResolution": "node",
-        "baseUrl": "./src",
+        "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "downlevelIteration": true
-    }
+        "downlevelIteration": true,
+        "importHelpers": true,
+        "strict": true,
+        "baseUrl": "./",
+        "paths": {
+            "#utils/*": ["src/utils/*"],
+            "#models": ["src/models"],
+            "#shared/*": ["src/2019/shared/*"],
+            "#2019/*": ["src/2019/*"]
+        }
+    },
+    "exclude": ["**/node_modules/**/*"]
 }
