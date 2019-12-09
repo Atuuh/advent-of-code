@@ -2,6 +2,7 @@ export class IntcodeComputer {
     private instructionPointer = 0;
     program: number[];
     output = 0;
+    relativeBase = 0;
 
     constructor(
         private readonly initialProgram: number[],
@@ -52,6 +53,7 @@ export class IntcodeComputer {
         this.instructionPointer = 0;
         this.program = this.initialProgram.slice();
         this.output = 0;
+        this.relativeBase = 0;
         let input;
 
         while (true) {
@@ -85,6 +87,9 @@ export class IntcodeComputer {
                 case Instruction.Equals:
                     this.performEquals(parameterModes);
                     break;
+                case Instruction.MoveRelativeBase:
+                    this.performMoveRelativeBase(parameterModes);
+                    break;
                 default:
                     throw Error(`Opcode is invalid!: ${opCode}`);
             }
@@ -92,9 +97,22 @@ export class IntcodeComputer {
     }
 
     getParameter(index: number, mode: ParameterMode) {
-        return mode === ParameterMode.Position
-            ? this.program[this.program[index]]
-            : this.program[index];
+        switch (mode) {
+            case ParameterMode.Immediate:
+                return this.program[index];
+            case ParameterMode.Position:
+                return this.program[this.program[index]];
+            case ParameterMode.Relative:
+                return this.program[this.relativeBase + this.program[index]];
+        }
+    }
+
+    performMoveRelativeBase(modes: ParameterMode[]) {
+        this.relativeBase += this.getParameter(
+            this.instructionPointer + 1,
+            modes[0]
+        );
+        this.instructionPointer += 2;
     }
 
     performEquals(parameterModes: ParameterMode[]) {
@@ -219,10 +237,12 @@ enum Instruction {
     FalseJump = 6,
     LessThan = 7,
     Equals = 8,
+    MoveRelativeBase = 9,
     Halt = 99,
 }
 
 enum ParameterMode {
     Position = 0,
     Immediate = 1,
+    Relative = 2,
 }

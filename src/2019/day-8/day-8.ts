@@ -57,7 +57,6 @@ export const decodeImage = (
     return layers;
 };
 
-const equals = (searchValue: number) => (value: number) =>
-    value === searchValue;
+const equals = <T>(searchValue: T) => (value: T) => value === searchValue;
 
 const log = console.log;

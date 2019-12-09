@@ -16,7 +16,7 @@
         "baseUrl": "./",
         "paths": {
             "#utils/*": ["src/utils/*"],
-            "#models": ["src/models"],
+            "#models/*": ["src/models/*"],
             "#shared/*": ["src/2019/shared/*"],
             "#2019/*": ["src/2019/*"]
         }
