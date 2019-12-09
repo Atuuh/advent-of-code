@@ -1,4 +1,4 @@
-import { Solution } from '#models';
+import { Solution } from '#models/solution';
 import { transpose, chunk } from '#utils/array/transformations';
 import { Input } from './input';
 

@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "CoenraadS.bracket-pair-colorizer",
+        "firefox-devtools.vscode-firefox-debug",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "Orta.vscode-jest",
+        "andys8.jest-snippets",
+        "PKief.material-icon-theme",
+        "zhuangtongfa.material-theme",
+        "esbenp.prettier-vscode",
+        "VisualStudioExptTeam.vscodeintellicode"
+    ]
+}

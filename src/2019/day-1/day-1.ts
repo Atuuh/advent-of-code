@@ -1,4 +1,5 @@
-import { Day, Solution } from '#models';
+import { Solution } from '#models/solution';
+import { Day } from '#models/day';
 import { sum } from '#utils/array/reducers';
 import { Input } from './input';
 
