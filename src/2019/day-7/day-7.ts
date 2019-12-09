@@ -1,4 +1,4 @@
-import { Solution } from '#models';
+import { Solution } from '#models/solution';
 import { getIncrementalArray } from '#utils/array/generation';
 import { IntcodeComputer } from '#shared/intcode-computer';
 import { Input } from './input';

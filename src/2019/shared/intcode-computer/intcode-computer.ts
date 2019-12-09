@@ -1,7 +1,6 @@
 export class IntcodeComputer {
     private instructionPointer = 0;
     program: number[];
-    output = 0;
     relativeBase = 0;
 
     constructor(
@@ -52,43 +51,73 @@ export class IntcodeComputer {
     *run(): Generator<number, number, number> {
         this.instructionPointer = 0;
         this.program = this.initialProgram.slice();
-        this.output = 0;
         this.relativeBase = 0;
-        let input;
 
         while (true) {
             const { opCode, parameterModes } = this.getNextInstruction();
+
+            const param1 = this.getParameter(
+                this.instructionPointer + 1,
+                parameterModes[0]
+            );
+            const param2 = this.getParameter(
+                this.instructionPointer + 2,
+                parameterModes[1]
+            );
+            const param3 =
+                parameterModes[2] === ParameterMode.Position
+                    ? this.program[this.instructionPointer + 3]
+                    : this.relativeBase +
+                      this.program[this.instructionPointer + 3];
+
             switch (opCode) {
                 case Instruction.Halt:
-                    return this.output;
+                    return -Infinity;
                 case Instruction.Add:
-                    this.performAddition(parameterModes);
+                    this.program[param3] = param1 + param2;
+                    this.instructionPointer += 4;
                     break;
                 case Instruction.Multiply:
-                    this.performMultiplication(parameterModes);
+                    this.program[param3] = param1 * param2;
+                    this.instructionPointer += 4;
                     break;
-                case Instruction.Set:
-                    input = yield -1;
-                    this.performSet(input);
+                case Instruction.Input:
+                    let index;
+                    if (parameterModes[0] === ParameterMode.Position)
+                        index = this.program[this.instructionPointer + 1];
+                    else if (parameterModes[0] === ParameterMode.Relative) {
+                        index =
+                            this.relativeBase +
+                            this.program[this.instructionPointer + 1];
+                    } else {
+                        index = -1;
+                    }
+                    this.program[index] = yield -1;
+                    this.instructionPointer += 2;
                     break;
                 case Instruction.Output:
-                    this.performOutput(parameterModes);
-                    yield this.output;
+                    yield param1;
+                    this.instructionPointer += 2;
                     break;
                 case Instruction.TrueJump:
-                    this.performTrueJump(parameterModes);
+                    this.instructionPointer =
+                        param1 !== 0 ? param2 : this.instructionPointer + 3;
                     break;
                 case Instruction.FalseJump:
-                    this.performFalseJump(parameterModes);
+                    this.instructionPointer =
+                        param1 === 0 ? param2 : this.instructionPointer + 3;
                     break;
                 case Instruction.LessThan:
-                    this.performLessThan(parameterModes);
+                    this.program[param3] = param1 < param2 ? 1 : 0;
+                    this.instructionPointer += 4;
                     break;
                 case Instruction.Equals:
-                    this.performEquals(parameterModes);
+                    this.program[param3] = param1 === param2 ? 1 : 0;
+                    this.instructionPointer += 4;
                     break;
                 case Instruction.MoveRelativeBase:
-                    this.performMoveRelativeBase(parameterModes);
+                    this.relativeBase += param1;
+                    this.instructionPointer += 2;
                     break;
                 default:
                     throw Error(`Opcode is invalid!: ${opCode}`);
@@ -99,127 +128,14 @@ export class IntcodeComputer {
     getParameter(index: number, mode: ParameterMode) {
         switch (mode) {
             case ParameterMode.Immediate:
-                return this.program[index];
+                return this.program[index] || 0;
             case ParameterMode.Position:
-                return this.program[this.program[index]];
+                return this.program[this.program[index]] || 0;
             case ParameterMode.Relative:
-                return this.program[this.relativeBase + this.program[index]];
+                return (
+                    this.program[this.relativeBase + this.program[index]] || 0
+                );
         }
-    }
-
-    performMoveRelativeBase(modes: ParameterMode[]) {
-        this.relativeBase += this.getParameter(
-            this.instructionPointer + 1,
-            modes[0]
-        );
-        this.instructionPointer += 2;
-    }
-
-    performEquals(parameterModes: ParameterMode[]) {
-        const left = this.getParameter(
-            this.instructionPointer + 1,
-            parameterModes[0]
-        );
-        const right = this.getParameter(
-            this.instructionPointer + 2,
-            parameterModes[1]
-        );
-        this.program[this.program[this.instructionPointer + 3]] =
-            left === right ? 1 : 0;
-
-        this.instructionPointer += 4;
-    }
-
-    performLessThan(parameterModes: ParameterMode[]) {
-        const left = this.getParameter(
-            this.instructionPointer + 1,
-            parameterModes[0]
-        );
-        const right = this.getParameter(
-            this.instructionPointer + 2,
-            parameterModes[1]
-        );
-        this.program[this.program[this.instructionPointer + 3]] =
-            left < right ? 1 : 0;
-
-        this.instructionPointer += 4;
-    }
-
-    performFalseJump(parameterModes: ParameterMode[]) {
-        const check = this.getParameter(
-            this.instructionPointer + 1,
-            parameterModes[0]
-        );
-        const value = this.getParameter(
-            this.instructionPointer + 2,
-            parameterModes[1]
-        );
-        this.instructionPointer =
-            check === 0 ? value : this.instructionPointer + 3;
-    }
-
-    performTrueJump(parameterModes: ParameterMode[]) {
-        const check = this.getParameter(
-            this.instructionPointer + 1,
-            parameterModes[0]
-        );
-        const value = this.getParameter(
-            this.instructionPointer + 2,
-            parameterModes[1]
-        );
-        this.instructionPointer =
-            check !== 0 ? value : this.instructionPointer + 3;
-    }
-
-    performOutput(parameterModes: ParameterMode[]) {
-        const output =
-            parameterModes[0] === ParameterMode.Position
-                ? this.program[this.program[this.instructionPointer + 1]]
-                : this.program[this.instructionPointer + 1];
-        this.output = output;
-        this.instructionPointer += 2;
-    }
-
-    performSet(input: number) {
-        this.program[this.program[this.instructionPointer + 1]] = input;
-        this.instructionPointer += 2;
-    }
-
-    performMultiplication(parameterModes: ParameterMode[]) {
-        const a =
-            parameterModes[0] === ParameterMode.Position
-                ? this.program[this.program[this.instructionPointer + 1]]
-                : this.program[this.instructionPointer + 1];
-        const b =
-            parameterModes[1] === ParameterMode.Position
-                ? this.program[this.program[this.instructionPointer + 2]]
-                : this.program[this.instructionPointer + 2];
-        const targetIndex = this.program[this.instructionPointer + 3];
-
-        const value = a * b;
-
-        this.program[targetIndex] = value;
-        this.instructionPointer += 4;
-    }
-
-    performAddition(parameterModes: ParameterMode[]) {
-        const a =
-            parameterModes[0] === ParameterMode.Position
-                ? this.program[this.program[this.instructionPointer + 1]]
-                : this.program[this.instructionPointer + 1];
-        const b =
-            parameterModes[1] === ParameterMode.Position
-                ? this.program[this.program[this.instructionPointer + 2]]
-                : this.program[this.instructionPointer + 2];
-        const targetIndex =
-            parameterModes[2] === ParameterMode.Position
-                ? this.program[this.instructionPointer + 3]
-                : this.instructionPointer + 3;
-
-        const value = a + b;
-
-        this.program[targetIndex] = value;
-        this.instructionPointer += 4;
     }
 }
 
@@ -231,7 +147,7 @@ export interface ExecutedProgram {
 enum Instruction {
     Add = 1,
     Multiply = 2,
-    Set = 3,
+    Input = 3,
     Output = 4,
     TrueJump = 5,
     FalseJump = 6,

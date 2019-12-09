@@ -28,8 +28,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(8);
-                    const result = runner.next().value;
+                    const result = runner.next(8).value;
                     expect(result).toEqual(1);
                 });
                 test('false', () => {
@@ -48,12 +47,11 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(7);
-                    const result = runner.next().value;
+                    const result = runner.next(7).value;
                     expect(result).toEqual(0);
                 });
             });
-            describe('position mode', () => {
+            describe('immediate mode', () => {
                 test('true', () => {
                     const ic = new IntcodeComputer([
                         3,
@@ -68,8 +66,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(8);
-                    const result = runner.next().value;
+                    const result = runner.next(8).value;
                     expect(result).toEqual(1);
                 });
                 test('false', () => {
@@ -86,8 +83,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(7);
-                    const result = runner.next().value;
+                    const result = runner.next(7).value;
                     expect(result).toEqual(0);
                 });
             });
@@ -111,8 +107,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(7);
-                    const result = runner.next().value;
+                    const result = runner.next(7).value;
                     expect(result).toEqual(1);
                 });
                 test('false', () => {
@@ -131,8 +126,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(8);
-                    const result = runner.next().value;
+                    const result = runner.next(8).value;
                     expect(result).toEqual(0);
                 });
             });
@@ -151,8 +145,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(7);
-                    const result = runner.next().value;
+                    const result = runner.next(7).value;
                     expect(result).toEqual(1);
                 });
 
@@ -170,8 +163,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(8);
-                    const result = runner.next().value;
+                    const result = runner.next(8).value;
                     expect(result).toEqual(0);
                 });
             });
@@ -200,8 +192,7 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(1);
-                    const result = runner.next().value;
+                    const result = runner.next(1).value;
                     expect(result).toEqual(1);
                 });
                 test('zero', () => {
@@ -225,14 +216,13 @@ describe('2019 - Shared', () => {
                     ]);
                     const runner = ic.run();
                     runner.next();
-                    runner.next(0);
-                    const result = runner.next().value;
+                    const result = runner.next(0).value;
                     expect(result).toEqual(0);
                 });
             });
         });
 
-        describe('run', () => {
+        describe('Da', () => {
             const input = [
                 3,
                 21,
@@ -286,25 +276,68 @@ describe('2019 - Shared', () => {
                 const ic = new IntcodeComputer(input);
                 const runner = ic.run();
                 runner.next();
-                runner.next(5);
-                const result = runner.next().value;
+                const result = runner.next(5).value;
                 expect(result).toEqual(999);
             });
             test('Example 2', () => {
                 const ic = new IntcodeComputer(input);
                 const runner = ic.run();
                 runner.next();
-                runner.next(8);
-                const result = runner.next().value;
+                const result = runner.next(8).value;
                 expect(result).toEqual(1000);
             });
             test('Example 3', () => {
                 const ic = new IntcodeComputer(input);
                 const runner = ic.run();
                 runner.next();
-                runner.next(15);
-                const result = runner.next().value;
+                const result = runner.next(15).value;
                 expect(result).toEqual(1001);
+            });
+        });
+
+        describe('Day 9 Examples', () => {
+            test('Example 1', () => {
+                const program = [
+                    109,
+                    1,
+                    204,
+                    -1,
+                    1001,
+                    100,
+                    1,
+                    100,
+                    1008,
+                    100,
+                    16,
+                    101,
+                    1006,
+                    101,
+                    0,
+                    99,
+                ];
+                const ic = new IntcodeComputer(program);
+                const runner = ic.run();
+                let state = runner.next();
+                let output = [state.value];
+                while (!state.done) {
+                    state = runner.next();
+                    if (!state.done) output = output.concat(state.value);
+                }
+                expect(output).toEqual(program);
+            });
+
+            test('Example 2', () => {
+                const program = [1102, 34915192, 34915192, 7, 4, 7, 99, 0];
+                const runner = new IntcodeComputer(program).run();
+                const result = runner.next().value as number;
+                expect(result.toString().length).toBe(16);
+            });
+
+            test('Example 3', () => {
+                const program = [104, 1125899906842624, 99];
+                const runner = new IntcodeComputer(program).run();
+                const result = runner.next().value;
+                expect(result).toBe(program[1]);
             });
         });
     });
