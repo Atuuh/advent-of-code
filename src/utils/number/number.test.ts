@@ -1,4 +1,8 @@
-import { isInRange } from './number';
+import {
+    isInRange,
+    getPrimeDecomposition,
+    lowestCommonMultiple,
+} from './number';
 
 describe('Utils - Number', () => {
     describe('isInRange', () => {
@@ -28,6 +32,40 @@ describe('Utils - Number', () => {
 
         test('number above range', () => {
             expect(isInRange(15, 0, 10)).toBe(false);
+        });
+    });
+
+    describe('getPrimeDecomposition', () => {
+        test('should correctly return prime factors of valid number', () => {
+            expect(getPrimeDecomposition(30)).toEqual([2, 3, 5]);
+        });
+
+        test('should return empty array for number less than 2', () => {
+            expect(getPrimeDecomposition(1)).toEqual([]);
+        });
+
+        test('should return [3] for value=3', () => {
+            expect(getPrimeDecomposition(3)).toEqual([3]);
+        });
+
+        test('should return [2,2,2,2,5] for value=80', () => {
+            expect(getPrimeDecomposition(80)).toEqual([2, 2, 2, 2, 5]);
+        });
+    });
+
+    describe('lowestCommonMultiple', () => {
+        test('should return correct value for two valid inputs', () => {
+            expect(lowestCommonMultiple([30, 40])).toBe(120);
+        });
+
+        test('should return correct value for three valid inputs', () => {
+            expect(lowestCommonMultiple([3, 9, 21])).toBe(63);
+        });
+
+        test('should return correct value for five valid inputs', () => {
+            expect(lowestCommonMultiple([1512, 9823, 122, 94, 156])).toBe(
+                11777934168
+            );
         });
     });
 });
