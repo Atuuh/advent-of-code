@@ -2,6 +2,7 @@ import {
     isInRange,
     getPrimeDecomposition,
     lowestCommonMultiple,
+    numberAt,
 } from './number';
 
 describe('Utils - Number', () => {
@@ -66,6 +67,15 @@ describe('Utils - Number', () => {
             expect(lowestCommonMultiple([1512, 9823, 122, 94, 156])).toBe(
                 11777934168
             );
+        });
+    });
+
+    describe('numberAt', () => {
+        test('should return correct number at a position in a number', () => {
+            expect(numberAt(1537, 0)).toBe(7);
+            expect(numberAt(1537, 1)).toBe(3);
+            expect(numberAt(1537, 2)).toBe(5);
+            expect(numberAt(1537, 3)).toBe(1);
         });
     });
 });

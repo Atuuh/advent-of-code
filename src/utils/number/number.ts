@@ -38,3 +38,12 @@ export const lowestCommonMultiple = (array: number[]): number => {
         return total * Math.pow(prime, maxPrimeCount);
     }, 1);
 };
+
+export const numberAt = (value: number, position: number): number =>
+    Math.floor((value / Math.pow(10, position)) % 10);
+
+export const toArray = (value: number): number[] =>
+    BigInt(value)
+        .toString()
+        .split('')
+        .map(Number);

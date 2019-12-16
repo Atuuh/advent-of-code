@@ -1,3 +1,3 @@
-import { DayTwelve } from '#2019/day-12/day-12';
+import { DayFifteen } from '#2019/day-15/day-15';
 
-console.log(DayTwelve());
+console.log(DayFifteen());
