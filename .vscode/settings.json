@@ -6,7 +6,6 @@
         "**/.hg": true,
         "**/.svn": true,
         "**/CVS": true,
-        "**/node_modules": true,
         "bin": true,
         "obj": true,
         "**/out": true,

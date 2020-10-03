@@ -9,12 +9,11 @@
             "type": "node",
             "request": "launch",
             "env": {
-                "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.app.json",
+                "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json",
                 "TS_NODE_TRANSPILE_ONLY": "true",
                 "TS_NODE_FILES": "true"
             },
             "args": ["${relativeFile}"],
-
             "runtimeArgs": [
                 "-r",
                 "ts-node/register",
@@ -23,7 +22,8 @@
             ],
             "cwd": "${workspaceRoot}",
             "protocol": "inspector",
-            "internalConsoleOptions": "openOnSessionStart"
+            "internalConsoleOptions": "openOnSessionStart",
+            "sourceMaps": false
         },
         {
             "type": "node",
@@ -37,7 +37,7 @@
             ],
             "args": ["${workspaceFolder}/src/index.ts"],
             "env": {
-                "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.app.json",
+                "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json",
                 "TS_NODE_TRANSPILE_ONLY": "true",
                 "TS_NODE_FILES": "true"
             },
