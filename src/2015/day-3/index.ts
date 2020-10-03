@@ -1,9 +1,11 @@
-import { flow } from 'fp-ts/function'
+import * as A from 'fp-ts/Array'
+import * as Eq from 'fp-ts/Eq'
 import * as NEA from 'fp-ts/NonEmptyArray'
 import * as S from 'fp-ts/Set'
-import * as Eq from 'fp-ts/Eq'
-import * as A from 'fp-ts/Array'
+import { flow } from 'fp-ts/function'
+
 import { input } from './input'
+import { log } from '#utils/console'
 
 type Move = '^' | '>' | 'v' | '<'
 type Moves = NEA.NonEmptyArray<Move>
@@ -66,5 +68,5 @@ export const getHousesWithRoboSanta = flow(
 
 const partB = () => getHousesWithRoboSanta(input)
 
-console.log('Part A', partA())
-console.log('Part B', partB())
+log('Part A', partA())
+log('Part B', partB())

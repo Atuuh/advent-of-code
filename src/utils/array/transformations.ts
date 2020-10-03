@@ -1,4 +1,4 @@
-export const chunk = (array: any[], length: number) => {
+export const chunk = <T extends unknown>(array: T[], length: number): T[][] => {
     const chunks = []
     for (let i = 0; i < array.length; i += length) {
         chunks.push(array.slice(i, i + length))
@@ -6,21 +6,23 @@ export const chunk = (array: any[], length: number) => {
     return chunks
 }
 
-export const transpose = (array: any[][]) =>
-    array[0].map((column, index) => array.map((row) => row[index]))
+export const transpose = <T extends unknown>(array: T[][]): T[][] =>
+    array[0].map((_, index) => array.map((row) => row[index]))
 
-export const rotate = (
-    array: any[],
+export const rotate = <T extends unknown>(
+    array: T[],
     amount = 1,
     direction: 'left' | 'right' = 'left'
-) => {
+): T[] => {
     amount = amount % array.length
     amount = direction === 'left' ? amount : array.length - amount
     return array.slice(amount).concat(array.slice(0, amount))
 }
 
-export const concat = (...arrays: any[][]) =>
+export const concat = (...arrays: any[][]): any[] =>
     arrays.reduce((acc, array) => acc.concat(array), [])
 
-export const zip = (a: any[], b: any[]) =>
-    a.map((value, index) => [value, b[index]])
+export const zip = <A extends unknown, B extends unknown>(
+    a: A[],
+    b: B[]
+): Array<[A, B]> => a.map((value, index) => [value, b[index]])

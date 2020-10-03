@@ -1,4 +1,4 @@
-import { min, max, sum } from './reducers'
+import { max, min, sum } from './reducers'
 
 describe('Utils - Array - Reducers', () => {
     describe('min', () => {

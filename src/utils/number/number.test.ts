@@ -1,6 +1,6 @@
 import {
-    isInRange,
     getPrimeDecomposition,
+    isInRange,
     lowestCommonMultiple,
     numberAt,
 } from './number'

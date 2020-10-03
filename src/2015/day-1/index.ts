@@ -1,6 +1,7 @@
 import { input } from './input'
 import * as NEA from 'fp-ts/lib/NonEmptyArray'
 import { flow, pipe } from 'fp-ts/lib/function'
+import { log } from '#utils/console'
 
 const partA = () => getFinalFloor(input)
 
@@ -25,5 +26,5 @@ export const getFirstTimeAtBasement = flow(mapInputToFloorNumber, (floors) =>
     floors.findIndex((floor) => floor === -1)
 )
 
-console.log('Part A', partA())
-console.log('Part B', partB())
+log('Part A', partA())
+log('Part B', partB())

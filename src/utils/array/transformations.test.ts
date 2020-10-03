@@ -1,4 +1,4 @@
-import { transpose, chunk, rotate, concat, zip } from './transformations'
+import { chunk, concat, rotate, transpose, zip } from './transformations'
 
 describe('Utils - Array - Transformations', () => {
     describe('chunk', () => {

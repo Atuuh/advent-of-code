@@ -1,3 +1,4 @@
+import { log } from '#utils/console'
 import { flow, pipe } from 'fp-ts/function'
 import { ordNumber } from 'fp-ts/lib/Ord'
 import { semigroupProduct, semigroupSum } from 'fp-ts/lib/Semigroup'
@@ -69,5 +70,5 @@ const partB = () =>
         NEA.fold(semigroupSum)
     )
 
-console.log('Part A', partA())
-console.log('Part B', partB())
+log('Part A', partA())
+log('Part B', partB())

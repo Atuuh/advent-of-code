@@ -1,43 +1,41 @@
 import { getHousesDeliveredTo, getHousesWithRoboSanta } from '.'
 
-describe('2015 - Day 3', () => {
-    describe('getHousesDeliveredTo', () => {
-        test('example 1', () => {
-            const input = '>'
+describe('getHousesDeliveredTo', () => {
+    test('example 1', () => {
+        const input = '>'
 
-            expect(getHousesDeliveredTo(input)).toBe(2)
-        })
-
-        test('example 2', () => {
-            const input = '^>v<'
-
-            expect(getHousesDeliveredTo(input)).toBe(4)
-        })
-
-        test('example 3', () => {
-            const input = '^v^v^v^v^v'
-
-            expect(getHousesDeliveredTo(input)).toBe(2)
-        })
+        expect(getHousesDeliveredTo(input)).toBe(2)
     })
 
-    describe('getHousesWithRoboSanta', () => {
-        test('example 1', () => {
-            const input = '^v'
+    test('example 2', () => {
+        const input = '^>v<'
 
-            expect(getHousesWithRoboSanta(input)).toBe(3)
-        })
+        expect(getHousesDeliveredTo(input)).toBe(4)
+    })
 
-        test('example 2', () => {
-            const input = '^>v<'
+    test('example 3', () => {
+        const input = '^v^v^v^v^v'
 
-            expect(getHousesWithRoboSanta(input)).toBe(3)
-        })
+        expect(getHousesDeliveredTo(input)).toBe(2)
+    })
+})
 
-        test('example 3', () => {
-            const input = '^v^v^v^v^v'
+describe('getHousesWithRoboSanta', () => {
+    test('example 1', () => {
+        const input = '^v'
 
-            expect(getHousesWithRoboSanta(input)).toBe(11)
-        })
+        expect(getHousesWithRoboSanta(input)).toBe(3)
+    })
+
+    test('example 2', () => {
+        const input = '^>v<'
+
+        expect(getHousesWithRoboSanta(input)).toBe(3)
+    })
+
+    test('example 3', () => {
+        const input = '^v^v^v^v^v'
+
+        expect(getHousesWithRoboSanta(input)).toBe(11)
     })
 })
