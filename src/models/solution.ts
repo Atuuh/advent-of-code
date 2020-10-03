@@ -1,6 +1,6 @@
 export type Solution = {
-    partOne: string | number;
-    partTwo: string | number;
-};
+    partOne: string | number
+    partTwo: string | number
+}
 
-export type Day = () => Solution;
+export type Day = () => Solution

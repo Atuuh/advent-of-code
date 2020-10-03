@@ -1,4 +1,3 @@
-
 # Advent of Code
 
 This repo is the collection of my solutions for [Advent of Code](https://adventofcode.com/)

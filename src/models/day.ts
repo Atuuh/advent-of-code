@@ -1,5 +1,5 @@
-import { Solution } from './solution';
+import { Solution } from './solution'
 
 export interface Day {
-    solve(): Solution;
+    solve(): Solution
 }

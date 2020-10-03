@@ -1,2 +1,2 @@
-export * from './day';
-export * from './solution';
+export * from './day'
+export * from './solution'

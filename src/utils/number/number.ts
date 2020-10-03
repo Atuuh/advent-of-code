@@ -8,42 +8,39 @@ export const isInRange = (
         (target > min && target < max) ||
         (inclusiveStart && target === min) ||
         (inclusiveEnd && target === max)
-    );
-};
+    )
+}
 
 export const getPrimeDecomposition = (value: number): number[] => {
-    if (value < 2) return [];
+    if (value < 2) return []
 
-    const primeFactors: number[] = [];
+    const primeFactors: number[] = []
 
     for (let i = 2; i <= value; i++) {
         while (value % i === 0) {
-            primeFactors.push(i);
-            value /= i;
+            primeFactors.push(i)
+            value /= i
         }
     }
 
-    return primeFactors;
-};
+    return primeFactors
+}
 
 export const lowestCommonMultiple = (array: number[]): number => {
-    const primeFactors = array.map(getPrimeDecomposition);
-    const distinctPrimes = [...new Set(primeFactors.flat())];
+    const primeFactors = array.map(getPrimeDecomposition)
+    const distinctPrimes = [...new Set(primeFactors.flat())]
 
     return distinctPrimes.reduce((total, prime) => {
         const maxPrimeCount = primeFactors.reduce((acc, value) => {
-            const primes = value.filter(p => p === prime);
-            return primes.length > acc.length ? primes : acc;
-        }, []).length;
-        return total * Math.pow(prime, maxPrimeCount);
-    }, 1);
-};
+            const primes = value.filter((p) => p === prime)
+            return primes.length > acc.length ? primes : acc
+        }, []).length
+        return total * Math.pow(prime, maxPrimeCount)
+    }, 1)
+}
 
 export const numberAt = (value: number, position: number): number =>
-    Math.floor((value / Math.pow(10, position)) % 10);
+    Math.floor((value / Math.pow(10, position)) % 10)
 
 export const toArray = (value: number): number[] =>
-    BigInt(value)
-        .toString()
-        .split('')
-        .map(Number);
+    BigInt(value).toString().split('').map(Number)

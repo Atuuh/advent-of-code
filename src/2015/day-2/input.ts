@@ -997,4 +997,4 @@ export const input = `3x11x24
 29x11x20
 3x12x15
 24x25x17
-14x6x11`;
+14x6x11`

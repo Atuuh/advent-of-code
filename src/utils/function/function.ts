@@ -3,21 +3,21 @@ export const memoise = <
 >(
     resultFn: ResultFn
 ): ResultFn => {
-    const cache = new Map<string, ReturnType<ResultFn>>();
+    const cache = new Map<string, ReturnType<ResultFn>>()
 
     const memoised = (...newArgs: unknown[]): ReturnType<ResultFn> => {
-        const stringArgs = JSON.stringify(newArgs);
+        const stringArgs = JSON.stringify(newArgs)
 
-        let result;
+        let result
         if (cache.has(stringArgs)) {
-            result = cache.get(stringArgs) as ReturnType<ResultFn>;
+            result = cache.get(stringArgs) as ReturnType<ResultFn>
         } else {
-            result = resultFn(...newArgs);
-            cache.set(stringArgs, result);
+            result = resultFn(...newArgs)
+            cache.set(stringArgs, result)
         }
 
-        return result;
-    };
+        return result
+    }
 
-    return memoised as ResultFn;
-};
+    return memoised as ResultFn
+}
