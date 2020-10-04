@@ -1,11 +1,11 @@
 import * as A from 'fp-ts/Array'
 import * as Eq from 'fp-ts/Eq'
 import * as NEA from 'fp-ts/NonEmptyArray'
-import * as S from 'fp-ts/Set'
 import { flow } from 'fp-ts/function'
 
 import { input } from './input'
 import { log } from '#utils/console'
+import { filterUnique } from '#utils/array'
 
 type Move = '^' | '>' | 'v' | '<'
 type Moves = NEA.NonEmptyArray<Move>
@@ -38,16 +38,12 @@ const performMoves = (moves: Moves): Houses =>
 
 const eqHouse = Eq.getTupleEq(Eq.eqNumber, Eq.eqNumber)
 
-const toArray = <T extends unknown>(set: Set<T>): T[] => [...set]
-
-const filterUnique = flow(S.fromArray(eqHouse), toArray)
-
 const getLength = (arr: unknown[]) => arr.length
 
 export const getHousesDeliveredTo = flow(
     parseMoves,
     performMoves,
-    filterUnique,
+    filterUnique(eqHouse),
     getLength
 )
 
@@ -62,7 +58,7 @@ export const getHousesWithRoboSanta = flow(
         [left as Moves, right as Moves] as NEA.NonEmptyArray<Moves>,
     NEA.map(performMoves),
     NEA.flatten,
-    filterUnique,
+    filterUnique(eqHouse),
     getLength
 )
 
