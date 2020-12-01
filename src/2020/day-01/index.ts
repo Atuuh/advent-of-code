@@ -7,10 +7,10 @@ export const findNumbersTotalling = (
     inputArray: number[],
     count: number,
     totalNumber: number
-): number[] => {
+): number[] | null => {
     if (count < 2) throw new Error('Count must be 2 or greater')
 
-    const filteredArray = inputArray.filter((value, _, arr) => {
+    for (const value of inputArray) {
         const targetNumber = totalNumber - value
 
         if (count > 2) {
@@ -20,21 +20,23 @@ export const findNumbersTotalling = (
                 targetNumber
             )
 
-            return otherNumbers.length > 0
-        } else {
-            return arr.includes(targetNumber)
+            if (otherNumbers) {
+                return [value, ...otherNumbers]
+            }
+        } else if (inputArray.includes(targetNumber)) {
+            return [value, targetNumber]
         }
-    })
+    }
 
-    return filteredArray
+    return null
 }
 
 console.log(
     'Part One:',
-    findNumbersTotalling(getInput(), 2, 2020).reduce(product)
+    findNumbersTotalling(getInput(), 2, 2020)?.reduce(product)
 )
 
 console.log(
     'Part Two:',
-    findNumbersTotalling(getInput(), 3, 2020).reduce(product)
+    findNumbersTotalling(getInput(), 3, 2020)?.reduce(product)
 )
