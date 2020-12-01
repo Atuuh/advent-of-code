@@ -6,4 +6,4 @@ export const max = (acc: number, next: number): number =>
 
 export const sum = (acc: number, next: number): number => acc + next
 
-export const multiply = (acc: number, next: number): number => acc * next
+export const product = (acc: number, next: number): number => acc * next
