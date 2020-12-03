@@ -1,9 +1,12 @@
 import { input } from './input'
 
-export const isPasswordValid = (passwordLine: string): boolean => {
-    const { minAmount, maxAmount, letter, passwordChars } = parsePasswordLine(
-        passwordLine
-    )
+export const isSledPasswordValid = (passwordLine: string): boolean => {
+    const {
+        firstNumber: minAmount,
+        secondNumber: maxAmount,
+        letter,
+        passwordChars,
+    } = parsePasswordLine(passwordLine)
 
     const amountLetterAppears = passwordChars.reduce(
         (amount, char) => (char === letter ? amount + 1 : amount),
@@ -13,7 +16,29 @@ export const isPasswordValid = (passwordLine: string): boolean => {
     if (amountLetterAppears >= minAmount && amountLetterAppears <= maxAmount) {
         return true
     }
+    return false
+}
 
+export const isTobogganPasswordValid = (passwordLine: string): boolean => {
+    const {
+        firstNumber: firstPosition,
+        secondNumber: secondPosition,
+        letter,
+        passwordChars,
+    } = parsePasswordLine(passwordLine)
+
+    const doesPositionMatch = (position: number) =>
+        passwordChars[position - 1] === letter
+
+    const firstPositionMatches = doesPositionMatch(firstPosition)
+    const secondPositionMatches = doesPositionMatch(secondPosition)
+
+    if (
+        (firstPositionMatches && !secondPositionMatches) ||
+        (!firstPositionMatches && secondPositionMatches)
+    ) {
+        return true
+    }
     return false
 }
 
@@ -22,24 +47,29 @@ const parsePasswordLine = (passwordLine: string) => {
         .split(' ')
         .map((s) => s.trim())
 
-    const [minAmount, maxAmount] = amounts.split('-').map(Number)
+    const [firstNumber, secondNumber] = amounts.split('-').map(Number)
     const letter = letterWithColon.charAt(0)
 
     const passwordChars = password.split('')
 
-    return { minAmount, maxAmount, letter, passwordChars }
+    return { firstNumber, secondNumber, letter, passwordChars }
 }
 
 const partOne = () => {
     const passwordLines = input.split('\n')
 
-    return passwordLines.map(isPasswordValid).filter((value) => value === true)
-        .length
+    return passwordLines
+        .map(isSledPasswordValid)
+        .filter((value) => value === true).length
+}
+
+const partTwo = () => {
+    const passwordLines = input.split('\n')
+
+    return passwordLines
+        .map(isTobogganPasswordValid)
+        .filter((value) => value === true).length
 }
 
 console.log('Part One:', partOne())
-
-// console.log(
-//     'Part Two:',
-//     findNumbersTotalling(getInput(), 3, 2020)?.reduce(product)
-// )
+console.log('Part Two:', partTwo())
