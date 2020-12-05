@@ -23,7 +23,7 @@
             "cwd": "${workspaceRoot}",
             "protocol": "inspector",
             "internalConsoleOptions": "openOnSessionStart",
-            "sourceMaps": false
+            "sourceMaps": true
         },
         {
             "type": "node",
