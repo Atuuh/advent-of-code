@@ -1,8 +1,3 @@
-import { product } from '#utils/array/reducers'
-import { input } from './input'
-
-const getInput = (): number[] => input.split('\n').map(Number)
-
 export const findNumbersTotalling = (
     inputArray: number[],
     count: number,
@@ -30,13 +25,3 @@ export const findNumbersTotalling = (
 
     return null
 }
-
-console.log(
-    'Part One:',
-    findNumbersTotalling(getInput(), 2, 2020)?.reduce(product)
-)
-
-console.log(
-    'Part Two:',
-    findNumbersTotalling(getInput(), 3, 2020)?.reduce(product)
-)

@@ -1,5 +1,3 @@
-import { input } from './input'
-
 export const isSledPasswordValid = (passwordLine: string): boolean => {
     const {
         firstNumber: minAmount,
@@ -54,22 +52,3 @@ const parsePasswordLine = (passwordLine: string) => {
 
     return { firstNumber, secondNumber, letter, passwordChars }
 }
-
-const partOne = () => {
-    const passwordLines = input.split('\n')
-
-    return passwordLines
-        .map(isSledPasswordValid)
-        .filter((value) => value === true).length
-}
-
-const partTwo = () => {
-    const passwordLines = input.split('\n')
-
-    return passwordLines
-        .map(isTobogganPasswordValid)
-        .filter((value) => value === true).length
-}
-
-console.log('Part One:', partOne())
-console.log('Part Two:', partTwo())
