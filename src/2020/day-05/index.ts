@@ -8,7 +8,9 @@ export const getSeatID = (seat: string): number => {
 
     return row * 8 + column
 }
+
 type Seat = { row: number; column: number }
+
 const findSeat = (
     possibleRows: number[],
     possibleColumns: number[],
@@ -58,3 +60,11 @@ const keepHalf = (half: 'lower' | 'higher') => <T extends Array<any>>(
 
 const keepLower = keepHalf('lower')
 const keepHigher = keepHalf('higher')
+
+export const getSeatIDUsingBinary = (seat: string): number => {
+    const binaryNumber = seat.split('').map(instructionToBinary).join('')
+    return parseInt(binaryNumber, 2)
+}
+
+const instructionToBinary = (instruction: string) =>
+    instruction === 'F' || instruction === 'L' ? 0 : 1
