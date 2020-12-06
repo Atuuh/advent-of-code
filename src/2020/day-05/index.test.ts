@@ -1,6 +1,6 @@
 import { getSeatID } from '.'
 
-describe('2020 - Day 04', () => {
+describe('2020 - Day 05', () => {
     describe('Part One', () => {
         test('example 1 should work', () => {
             const input = 'FBFBBFFRLR'
