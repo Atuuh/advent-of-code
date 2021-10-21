@@ -1,5 +1,4 @@
 import { max } from '#utils/array/reducers'
-import { env } from 'process'
 import { getSeatID, getSeatIDUsingBinary } from '.'
 import { input } from './input'
 
