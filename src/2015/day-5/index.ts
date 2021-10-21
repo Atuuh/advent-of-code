@@ -31,14 +31,15 @@ export const partARules: Rule[] = [
 
 export const partBRules: Rule[] = [doublePairRule, repeatedLetterWithGapRule]
 
-export const isNiceString = (testFns: ((input: string) => boolean)[]) => (
-    input: string
-): boolean => testFns.map((fn) => fn(input)).every((result) => result)
+export const isNiceString =
+    (testFns: ((input: string) => boolean)[]) =>
+    (input: string): boolean =>
+        testFns.map((fn) => fn(input)).every((result) => result)
 
 const split = (splitParams: string | RegExp) => (value: string) =>
     value.split(splitParams)
 
-const getLength = <T extends unknown>(array: T[]): number => array.length
+const getLength = <T>(array: T[]): number => array.length
 
 const partA = () =>
     pipe(

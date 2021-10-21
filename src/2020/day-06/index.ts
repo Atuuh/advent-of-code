@@ -11,5 +11,5 @@ export const getGroupAnswers = (
                   acc.filter((value) => current.includes(value))
               )
 
-const arrayUnique = <T extends unknown>(value: T, index: number, array: T[]) =>
+const arrayUnique = <T>(value: T, index: number, array: T[]) =>
     array.indexOf(value) === index

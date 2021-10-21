@@ -5,7 +5,7 @@ export const getIncrementalArray = (
     return new Array(size).fill(0).map((_, index) => index + startNumber)
 }
 
-export const repeat = <T extends unknown>(
+export const repeat = <T>(
     array: T[],
     repeats: number,
     maxLength: number | undefined = undefined

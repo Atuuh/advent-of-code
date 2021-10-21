@@ -51,12 +51,12 @@ const findSeat = (
     }
 }
 
-const keepHalf = (half: 'lower' | 'higher') => <T extends Array<any>>(
-    array: T
-) =>
-    half === 'lower'
-        ? array.slice(0, array.length / 2)
-        : array.slice(array.length / 2)
+const keepHalf =
+    (half: 'lower' | 'higher') =>
+    <T extends Array<any>>(array: T) =>
+        half === 'lower'
+            ? array.slice(0, array.length / 2)
+            : array.slice(array.length / 2)
 
 const keepLower = keepHalf('lower')
 const keepHigher = keepHalf('higher')
