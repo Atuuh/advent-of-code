@@ -1,4 +1,4 @@
-import { getBagsContainingShinyGoldBags } from '.'
+import { getBagsContainingShinyGoldBags, getRequiredNumberOfBags } from '.'
 
 describe('2020 - Day 07', () => {
     describe('Part One', () => {
@@ -12,9 +12,26 @@ describe('2020 - Day 07', () => {
             vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
             faded blue bags contain no other bags.
             dotted black bags contain no other bags.`
+
             const result = getBagsContainingShinyGoldBags(input)
 
             expect(result).toBe(4)
+        })
+    })
+
+    describe('Part Two', () => {
+        test('example 1 should work', () => {
+            const input = `shiny gold bags contain 2 dark red bags.
+            dark red bags contain 2 dark orange bags.
+            dark orange bags contain 2 dark yellow bags.
+            dark yellow bags contain 2 dark green bags.
+            dark green bags contain 2 dark blue bags.
+            dark blue bags contain 2 dark violet bags.
+            dark violet bags contain no other bags.`
+
+            const result = getRequiredNumberOfBags(input, 'shiny gold')
+
+            expect(result).toBe(126)
         })
     })
 })
