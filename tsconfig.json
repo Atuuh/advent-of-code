@@ -12,7 +12,7 @@
         "importHelpers": true,
         "strict": true,
         "baseUrl": "./",
-        "sourceMap": false,
+        "sourceMap": true,
         "paths": {
             "#utils/*": ["src/utils/*"],
             "#models/*": ["src/models/*"],
