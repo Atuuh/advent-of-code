@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "lib": ["es2019"],
-        "module": "commonjs",
-        "target": "es2019",
+        "lib": ["es2020"],
+        "module": "es2020",
+        "target": "es2020",
         "rootDir": "./src/",
         "declaration": false,
         "moduleResolution": "node",
@@ -10,6 +10,7 @@
         "experimentalDecorators": true,
         "downlevelIteration": true,
         "importHelpers": true,
+        "allowSyntheticDefaultImports": true,
         "strict": true,
         "baseUrl": "./",
         "sourceMap": true,
