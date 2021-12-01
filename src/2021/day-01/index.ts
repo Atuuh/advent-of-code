@@ -1,37 +1,36 @@
 import { sum } from '#utils/array/reducers'
 
-type windowAccumulator = {
-    previous: (number | null)[]
-    result: boolean[]
-}
-
-const areNoneNull = <T>(array: (T | null)[]): array is T[] =>
-    !array.some((value) => value === null)
-
 export const countIncreasingNumbersInWindow = (
     values: number[],
     windowSize: number
 ) =>
     values
-        .reduce<windowAccumulator>(
-            ({ previous, result }, current) => {
-                if (!areNoneNull(previous))
-                    return {
-                        previous: previous.concat(current).slice(-windowSize),
-                        result,
-                    }
-
-                const currentWindow = previous
-                    .concat(current)
-                    .slice(-windowSize)
-
-                return {
-                    previous: currentWindow,
-                    result: result.concat(
-                        currentWindow.reduce(sum) > previous.reduce(sum)
-                    ),
-                }
-            },
-            { previous: new Array(windowSize).fill(null), result: [] }
-        )
+        .slice(windowSize)
+        .reduce(increasingNumbersInWindow(windowSize), {
+            previousWindow: values.slice(0, windowSize),
+            result: [],
+        })
         .result.filter((value) => value === true).length
+
+type windowAccumulator = {
+    previousWindow: number[]
+    result: boolean[]
+}
+
+const increasingNumbersInWindow =
+    (windowSize: number) =>
+    (
+        { previousWindow, result }: windowAccumulator,
+        currentValue: number
+    ): windowAccumulator => {
+        const currentWindow = previousWindow
+            .concat(currentValue)
+            .slice(-windowSize)
+
+        return {
+            previousWindow: currentWindow,
+            result: result.concat(
+                currentWindow.reduce(sum) > previousWindow.reduce(sum)
+            ),
+        }
+    }
