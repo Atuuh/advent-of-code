@@ -1,11 +1,11 @@
+import { inputToNumbers } from '#utils/input/mappings'
+import { parseAndSolve } from '#utils/solve'
 import { countIncreasingNumbersInWindow } from '.'
-import { input } from './input'
 
-const getInput = () => input.split('\n').map(Number)
+const solve = parseAndSolve(2021, 1, inputToNumbers)
 
-const partOne = () => countIncreasingNumbersInWindow(getInput(), 1)
+// Part One
+solve((input) => countIncreasingNumbersInWindow(input, 1), 'Part One:')
 
-const partTwo = () => countIncreasingNumbersInWindow(getInput(), 3)
-
-console.log('Part One:', partOne())
-console.log('Part Two:', partTwo())
+// Part Two
+solve((input) => countIncreasingNumbersInWindow(input, 3), 'Part Two:')
