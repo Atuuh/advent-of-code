@@ -21,3 +21,5 @@ export const countIncreasingNumbers = (values: number[]) => {
         )
         .result.filter((value) => value === true).length
 }
+
+export const countIncreasingNumbersInWindow = (values: number[]) => 0
