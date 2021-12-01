@@ -28,25 +28,25 @@ type windowAccumulator = {
     result: boolean[]
 }
 
+const areNoneNull = <T>(array: (T | null)[]): array is T[] =>
+    !array.some((value) => value === null)
+
 export const countIncreasingNumbersInWindow = (values: number[]) =>
     values
         .reduce<windowAccumulator>(
             ({ previous, result }, current) => {
-                if (previous.some((value) => value === null))
+                if (!areNoneNull(previous))
                     return {
                         previous: previous.concat(current).slice(-3),
                         result,
                     }
 
-                const currentWindow = previous
-                    .concat(current)
-                    .slice(-3) as number[]
+                const currentWindow = previous.concat(current).slice(-3)
 
                 return {
                     previous: currentWindow,
                     result: result.concat(
-                        currentWindow.reduce(sum) >
-                            (previous as number[]).reduce(sum)
+                        currentWindow.reduce(sum) > previous.reduce(sum)
                     ),
                 }
             },
