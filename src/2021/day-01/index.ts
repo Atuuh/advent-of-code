@@ -1,13 +1,13 @@
 import { sum } from '#utils/array/reducers'
 
-type f = {
+type accumulator = {
     previous: number | null
     result: boolean[]
 }
 
 export const countIncreasingNumbers = (values: number[]) =>
     values
-        .reduce<f>(
+        .reduce<accumulator>(
             ({ previous, result }, current) => {
                 if (previous === null) return { previous: current, result }
 
@@ -23,14 +23,14 @@ export const countIncreasingNumbers = (values: number[]) =>
         )
         .result.filter((value) => value === true).length
 
-type g = {
+type windowAccumulator = {
     previous: (number | null)[]
     result: boolean[]
 }
 
 export const countIncreasingNumbersInWindow = (values: number[]) =>
     values
-        .reduce<g>(
+        .reduce<windowAccumulator>(
             ({ previous, result }, current) => {
                 if (previous.some((value) => value === null))
                     return {
