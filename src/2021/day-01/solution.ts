@@ -1,8 +1,9 @@
+import { countIncreasingNumbers } from '.'
 import { input } from './input'
 
-const getInput = input.split('\n').map(Number)
+const getInput = () => input.split('\n').map(Number)
 
-const partOne = () => ''
+const partOne = () => countIncreasingNumbers(getInput())
 
 const partTwo = () => ''
 
