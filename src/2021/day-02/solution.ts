@@ -4,12 +4,17 @@ import { getPosition } from '.'
 
 const solve = parseAndSolve(2021, 2, inputToArray)
 
-// Part One
-const getSolution = (input: string[]) => {
-    const result = getPosition({ horizontal: 0, vertical: 0, aim: 0 })(input)
+const getSolution = (withAim: boolean) => (input: string[]) => {
+    const result = getPosition({
+        horizontal: 0,
+        vertical: 0,
+        aim: withAim ? 0 : undefined,
+    })(input)
     return result.horizontal * result.vertical
 }
-// solve(getSolution, 'Part One:')
+
+// Part One
+solve(getSolution(false), 'Part One:')
 
 // Part Two
-solve(getSolution, 'Part Two:')
+solve(getSolution(true), 'Part Two:')
