@@ -7,7 +7,7 @@
     "private": true,
     "scripts": {
         "test": "jest",
-        "lint": "eslint \"src/**\""
+        "lint": "eslint \"src/**/*.ts\""
     },
     "devDependencies": {
         "@types/jest": "^27.0.2",
