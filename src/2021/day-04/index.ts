@@ -43,12 +43,12 @@ export const getLastWinningScore = (input: string) => {
 const markAllBoards = (
     bingoBoards: Board[],
     callingNumbers: string[]
-): [string[][], string] => {
+): [Board, string] => {
     const [numberToMark, ...nextnumbersToMark] = callingNumbers
     const updatedBoards = bingoBoards.map((board) =>
         markBoard(board, numberToMark)
     )
-    const winningBoards = updatedBoards.filter(isWinningBoard)
+    const [winningBoards] = groupWinningBoards(updatedBoards)
 
     if (winningBoards.length > 0) {
         return [winningBoards[0], numberToMark]
