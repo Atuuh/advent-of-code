@@ -21,3 +21,9 @@ export const memoise = <
 
     return memoised as ResultFn
 }
+
+export const flip =
+    <A, B, C>(fn: (a: A) => (b: B) => C) =>
+    (b: B) =>
+    (a: A) =>
+        fn(a)(b)
