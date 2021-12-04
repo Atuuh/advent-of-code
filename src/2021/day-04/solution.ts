@@ -1,5 +1,5 @@
 import { parseAndSolve } from '#utils/solve'
-import { getFinalScore } from '.'
+import { getFinalScore, getLastWinningScore } from '.'
 
 const solve = parseAndSolve(2021, 4, (input) => input)
 
@@ -7,4 +7,4 @@ const solve = parseAndSolve(2021, 4, (input) => input)
 solve(getFinalScore, 'Part One:')
 
 // Part Two
-solve(() => 0, 'Part Two:')
+solve(getLastWinningScore, 'Part Two:')

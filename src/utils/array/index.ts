@@ -7,3 +7,14 @@ export const filterUnique = <T>(eq: Eq<T>): ((array: T[]) => T[]) =>
 
 export const atIndices = <T>(array: T[], indexes: number[]) =>
     indexes.map((index) => array[index])
+
+export const partition =
+    <T>(predicate: (item: T) => boolean) =>
+    (array: T[]): [T[], T[]] =>
+        array.reduce<[T[], T[]]>(
+            ([passing, failing], item) =>
+                predicate(item)
+                    ? [[...passing, item], failing]
+                    : [passing, [...failing, item]],
+            [[], []]
+        )
