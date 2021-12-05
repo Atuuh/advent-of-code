@@ -35,28 +35,14 @@ const addPointToGrid = (grid: Grid, [x, y]: Point): Grid => [
 ]
 
 const getAllLinePoints = ([[x1, y1], [x2, y2]]: Line): Point[] => {
-    let xs: number[], ys: number[]
+    let xs =
+        x2 > x1 ? numbersFrom(x1, x2 + 1) : numbersFrom(x2, x1 + 1).reverse()
+    let ys =
+        y2 > y1 ? numbersFrom(y1, y2 + 1) : numbersFrom(y2, y1 + 1).reverse()
     if (x1 === x2) {
-        ys =
-            y2 > y1
-                ? numbersFrom(y1, y2 + 1)
-                : numbersFrom(y2, y1 + 1).reverse()
         xs = new Array(ys.length).fill(x1)
     } else if (y1 === y2) {
-        xs =
-            x2 > x1
-                ? numbersFrom(x1, x2 + 1)
-                : numbersFrom(x2, x1 + 1).reverse()
         ys = new Array(xs.length).fill(y1)
-    } else {
-        xs =
-            x2 > x1
-                ? numbersFrom(x1, x2 + 1)
-                : numbersFrom(x2, x1 + 1).reverse()
-        ys =
-            y2 > y1
-                ? numbersFrom(y1, y2 + 1)
-                : numbersFrom(y2, y1 + 1).reverse()
     }
     return zip(xs, ys)
 }
