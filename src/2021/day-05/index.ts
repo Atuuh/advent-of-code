@@ -35,29 +35,30 @@ const addPointToGrid = (grid: Grid, [x, y]: Point): Grid => [
 ]
 
 const getAllLinePoints = ([[x1, y1], [x2, y2]]: Line): Point[] => {
+    let xs: number[], ys: number[]
     if (x1 === x2) {
-        const smallY = Math.min(y1, y2)
-        const bigY = Math.max(y1, y2)
-        const ys = getIncrementalArray(bigY - smallY + 1, smallY)
-        const xs = repeat([x1], bigY - smallY + 1)
-        return zip(xs, ys)
-    } else if (y1 === y2) {
-        const smallX = Math.min(x1, x2)
-        const bigX = Math.max(x1, x2)
-        const xs = getIncrementalArray(bigX - smallX + 1, smallX)
-        const ys = repeat([y1], bigX - smallX + 1)
-        return zip(xs, ys)
-    } else {
-        const xs =
-            x2 > x1
-                ? numbersFrom(x1, x2 + 1)
-                : numbersFrom(x2, x1 + 1).reverse()
-        const ys =
+        ys =
             y2 > y1
                 ? numbersFrom(y1, y2 + 1)
                 : numbersFrom(y2, y1 + 1).reverse()
-        return zip(xs, ys)
+        xs = new Array(ys.length).fill(x1)
+    } else if (y1 === y2) {
+        xs =
+            x2 > x1
+                ? numbersFrom(x1, x2 + 1)
+                : numbersFrom(x2, x1 + 1).reverse()
+        ys = new Array(xs.length).fill(y1)
+    } else {
+        xs =
+            x2 > x1
+                ? numbersFrom(x1, x2 + 1)
+                : numbersFrom(x2, x1 + 1).reverse()
+        ys =
+            y2 > y1
+                ? numbersFrom(y1, y2 + 1)
+                : numbersFrom(y2, y1 + 1).reverse()
     }
+    return zip(xs, ys)
 }
 
 const numbersFrom = (a: number, b: number) =>
