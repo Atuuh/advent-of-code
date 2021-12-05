@@ -1,6 +1,3 @@
-// find vector intersections
-
-import { getIncrementalArray, repeat } from '#utils/array/generation'
 import { zip } from '#utils/array/transformations'
 
 type Grid = number[][]
@@ -22,11 +19,6 @@ const addLineToGrid = (grid: Grid, line: Line): Grid => {
     const updatedGrid = points.reduce(addPointToGrid, grid)
     return updatedGrid
 }
-
-// const addPointToGrid = (grid: Grid, [x, y]: Point): Grid => {
-//     grid[x][y] += 1
-//     return grid
-// }
 
 const addPointToGrid = (grid: Grid, [x, y]: Point): Grid => [
     ...grid.slice(0, x),
