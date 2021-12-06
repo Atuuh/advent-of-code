@@ -1,32 +1,28 @@
+import { getIncrementalArray } from '#utils/array/generation'
 import { sum } from '#utils/array/reducers'
 
 export type Model = {
     [age: number]: number
 }
 
+const getEmptyModel = (): Model =>
+    getIncrementalArray(9).reduce((model, i) => ({ ...model, [i]: 0 }), {})
+
 export const modelLifecycle = (days: number, fish: Model): Model => {
     if (days === 0) return fish
 
-    const nextCycle = {
-        0: fish[1] || 0,
-        1: fish[2] || 0,
-        2: fish[3] || 0,
-        3: fish[4] || 0,
-        4: fish[5] || 0,
-        5: fish[6] || 0,
-        6: fish[7] + fish[0] || 0,
-        7: fish[8] || 0,
-        8: fish[0] || 0,
-    }
+    const nextCycle = Object.keys(fish)
+        .map(Number)
+        .reduce(ageGroupOfFish(fish), getEmptyModel())
 
     return modelLifecycle(days - 1, nextCycle)
 }
 
+const ageGroupOfFish =
+    (fish: Model) =>
+    (newCycle: Model, age: number): Model =>
+        age === 0
+            ? { ...newCycle, 6: fish[age] + newCycle[6], 8: fish[age] }
+            : { ...newCycle, [age - 1]: fish[age] + newCycle[age - 1] }
+
 export const countFish = (fish: Model) => Object.values(fish).reduce(sum)
-
-// const ageFish = (age: number, fishCount: number) =>
-//     age === 0 ?
-//         ([{6: fishCount}, {8: fishCount}]) :
-//         ({[age - 1]: fishCount})
-
-// const ageFish = (fish: number): number[] => (fish === 0 ? [6, 8] : [fish - 1])
