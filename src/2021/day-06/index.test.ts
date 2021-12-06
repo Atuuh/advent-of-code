@@ -1,25 +1,34 @@
-import { modelLifecycle } from '.'
+import { countFish, modelLifecycle } from '.'
 
 describe('2021 - Day 06', () => {
     describe('Part One', () => {
         test('example should work', () => {
-            const startingFish = [3, 4, 3, 1, 2]
+            const startingFish = { 1: 1, 2: 1, 3: 2, 4: 1 }
 
             const result = modelLifecycle(18, startingFish)
+            const fishCount = countFish(result)
 
-            expect(result.length).toBe(26)
+            expect(fishCount).toBe(26)
         })
 
         test('second example should work', () => {
-            const startingFish = [3, 4, 3, 1, 2]
+            const startingFish = { 1: 1, 2: 1, 3: 2, 4: 1 }
 
             const result = modelLifecycle(80, startingFish)
+            const fishCount = countFish(result)
 
-            expect(result.length).toBe(5934)
+            expect(fishCount).toBe(5934)
         })
     })
 
     describe('Part Two', () => {
-        test.todo('example should work')
+        test('example should work', () => {
+            const startingFish = { 1: 1, 2: 1, 3: 2, 4: 1 }
+
+            const result = modelLifecycle(256, startingFish)
+            const fishCount = countFish(result)
+
+            expect(fishCount).toBe(26984457539)
+        })
     })
 })
