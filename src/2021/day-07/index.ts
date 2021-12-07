@@ -24,7 +24,8 @@ const calculateFuel =
         const cost = positions.reduce(
             fuelRate === 'constant'
                 ? constantFuelRate(value)
-                : linearFuelRate(value)
+                : linearFuelRate(value),
+            0
         )
         if (cost < cheapestCost) {
             return [value, cost]
