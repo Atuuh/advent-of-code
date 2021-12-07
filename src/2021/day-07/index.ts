@@ -1,25 +1,30 @@
 import { getIncrementalArray } from '#utils/array/generation'
 import { max, min } from '#utils/array/reducers'
 
-type tetete = [position: number, fuelCost: number]
+type Result = [position: number, fuelCost: number]
+type FuelRate = 'constant' | 'linear'
 
-export const getCheapestAlignment = (positions: number[]): tetete => {
-    const minimum = positions.reduce(min)
-    const maximum = positions.reduce(max)
-    const testPositions = getIncrementalArray(maximum - minimum, minimum)
-    const cheapestPosition = testPositions.reduce(calculateFuel(positions), [
-        Number.MAX_VALUE,
-        Number.MAX_VALUE,
-    ])
-    return cheapestPosition
-}
+export const getCheapestAlignment =
+    (fuelRate: 'constant' | 'linear') =>
+    (positions: number[]): Result => {
+        const minimum = positions.reduce(min)
+        const maximum = positions.reduce(max)
+        const testPositions = getIncrementalArray(maximum - minimum, minimum)
+
+        const cheapestPosition = testPositions.reduce(
+            calculateFuel(positions, fuelRate),
+            [Number.MAX_VALUE, Number.MAX_VALUE]
+        )
+        return cheapestPosition
+    }
 
 const calculateFuel =
-    (positions: number[]) =>
-    ([cheapestPosition, cheapestCost]: tetete, value: number): tetete => {
+    (positions: number[], fuelRate: FuelRate) =>
+    ([cheapestPosition, cheapestCost]: Result, value: number): Result => {
         const cost = positions.reduce(
-            (acc, pos) => (acc += Math.abs(value - pos)),
-            0
+            fuelRate === 'constant'
+                ? constantFuelRate(value)
+                : linearFuelRate(value)
         )
         if (cost < cheapestCost) {
             return [value, cost]
@@ -27,3 +32,11 @@ const calculateFuel =
             return [cheapestPosition, cheapestCost]
         }
     }
+
+const constantFuelRate = (value: number) => (total: number, position: number) =>
+    (total += Math.abs(value - position))
+
+const linearFuelRate = (value: number) => (total: number, position: number) =>
+    (total += getGaussianSum(Math.abs(value - position)))
+
+const getGaussianSum = (amount: number) => (amount * (amount + 1)) / 2
