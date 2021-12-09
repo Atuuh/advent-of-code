@@ -1,4 +1,4 @@
-import { filterUnique } from '#utils/array'
+import { filterUnique, uniqueBy } from '#utils/array'
 import { product, sum } from '#utils/array/reducers'
 
 type Point = { x: number; y: number; value: number }
@@ -32,24 +32,19 @@ const getBasin = (points: Point[], heightmap: number[][]): Point[] => {
     const neighbours = points.flatMap((point) =>
         getNeighboursOf(heightmap)(point.x, point.y)
     )
-    // filter any neighbours in point list
-    const remainingNeighbours = neighbours.filter((point) =>
+
+    const externalNeighbours = neighbours.filter((point) =>
         points.every((otherPoint) => !arePointsEqual(point, otherPoint))
     )
 
-    if (remainingNeighbours.some((point) => point.value < 9)) {
+    if (externalNeighbours.some((point) => point.value < 9)) {
         const basin = points.concat(
-            remainingNeighbours.filter((point) => point.value < 9)
+            externalNeighbours.filter((point) => point.value < 9)
         )
         return getBasin(basin, heightmap)
     }
     return points.filter(uniqueBy(arePointsEqual))
 }
-
-const uniqueBy =
-    <T>(compareFn: (a: T, b: T) => boolean) =>
-    (element: T, index: number, self: T[]) =>
-        self.findIndex((item) => compareFn(element, item)) === index
 
 const arePointsEqual = (a: Point, b: Point) => a.x === b.x && a.y === b.y
 

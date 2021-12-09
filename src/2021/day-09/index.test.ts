@@ -1,4 +1,3 @@
-import { sum } from '#utils/array/reducers'
 import { getBasins, getLowPoints, productBiggestBasins, sumRiskLevels } from '.'
 
 describe('2021 - Day 09', () => {
