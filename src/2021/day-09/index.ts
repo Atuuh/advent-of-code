@@ -1,4 +1,4 @@
-import { filterUnique, uniqueBy } from '#utils/array'
+import { uniqueBy } from '#utils/array'
 import { product, sum } from '#utils/array/reducers'
 
 type Point = { x: number; y: number; value: number }
