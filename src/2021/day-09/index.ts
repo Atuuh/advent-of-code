@@ -1,5 +1,6 @@
 import { uniqueBy } from '#utils/array'
 import { product, sum } from '#utils/array/reducers'
+import { ascending } from '#utils/array/sorting'
 
 type Point = { x: number; y: number; value: number }
 
@@ -54,8 +55,6 @@ export const productBiggestBasins = (basins: Point[][]) =>
         .sort(ascending)
         .slice(-3)
         .reduce(product, 1)
-
-const ascending = (a: number, b: number) => a - b
 
 const getNeighboursOf =
     (heightmap: number[][]) =>
