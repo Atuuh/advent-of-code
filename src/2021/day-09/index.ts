@@ -1,15 +1,18 @@
 import { uniqueBy } from '#utils/array'
+import { getNeighbours, map } from '#utils/array/2d'
 import { product, sum } from '#utils/array/reducers'
 import { ascending } from '#utils/array/sorting'
 
 type Point = { x: number; y: number; value: number }
 
+const getGrid = map((item: number, x, y): Point => ({ x, y, value: item }))
+
 export const getLowPoints = (heightmap: number[][]): Point[] => {
-    const getNeighbours = getNeighboursOf(heightmap)
+    const grid = getGrid(heightmap)
 
     return heightmap.reduce<Point[]>((lowPoints, columns, y) => {
         const rowLowPoints = columns.reduce<Point[]>((lp, value, x) => {
-            const neighbours = getNeighbours(x, y)
+            const neighbours = getNeighbours(grid)(x, y, 'cardinal')
             if (neighbours.some((point) => point.value <= value)) {
                 return lp
             } else {
@@ -30,8 +33,10 @@ export const getBasins = (heightmap: number[][]): Point[][] => {
 }
 
 const getBasin = (points: Point[], heightmap: number[][]): Point[] => {
+    const grid = getGrid(heightmap)
+
     const neighbours = points.flatMap((point) =>
-        getNeighboursOf(heightmap)(point.x, point.y)
+        getNeighbours(grid)(point.x, point.y, 'cardinal')
     )
 
     const externalNeighbours = neighbours.filter((point) =>
@@ -55,14 +60,3 @@ export const productBiggestBasins = (basins: Point[][]) =>
         .sort(ascending)
         .slice(-3)
         .reduce(product, 1)
-
-const getNeighboursOf =
-    (heightmap: number[][]) =>
-    (x: number, y: number): Point[] => {
-        return [
-            { x, y: y - 1, value: heightmap?.[y - 1]?.[x] ?? -1 },
-            { x, y: y + 1, value: heightmap?.[y + 1]?.[x] ?? -1 },
-            { x: x - 1, y, value: heightmap?.[y]?.[x - 1] ?? -1 },
-            { x: x + 1, y, value: heightmap?.[y]?.[x + 1] ?? -1 },
-        ].filter((point) => point.value >= 0)
-    }

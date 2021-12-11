@@ -1,7 +1,7 @@
 export const map =
-    <T, U>(mapFn: (item: T) => U) =>
+    <T, U>(mapFn: (item: T, x: number, y: number) => U) =>
     (array: T[][]): U[][] =>
-        array.map((column) => column.map((item) => mapFn(item)))
+        array.map((column, y) => column.map((item, x) => mapFn(item, x, y)))
 
 export const modify = <T>(
     grid: T[][],
