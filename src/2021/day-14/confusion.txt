@@ -1,0 +1,9 @@
+  CH        HH        CB        NH        HB        HC        HN        NN        BH        NC        NB        BN        BB        BC        CC        CN
+ /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \
+CB  BH    HN  NH    CH  HB    NC  CH    HC  CB    HB  BC    HC  CN    NC  CN    BH  HH    NB  BC    NB  BB    BB  BN    BN  NB    BB  BC    CN  NC    CC  CN
+
+CHHH
+
+CBHNHNH
+
+--CB BH HN NH
