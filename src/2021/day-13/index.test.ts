@@ -24,7 +24,7 @@ describe('2021 - Day 13', () => {
                 [9, 0],
             ]
 
-            const result = foldAlong(dots, 'y', 7)
+            const result = foldAlong(dots, { direction: 'y', point: 7 })
 
             expect(result).toHaveLength(17)
         })
