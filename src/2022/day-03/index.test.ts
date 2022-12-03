@@ -2,33 +2,32 @@ import { findBadge, findItemInBothCompartments, getPriority } from '.'
 
 describe('2022 - Day 03', () => {
     describe('getPriority', () => {
-        test('example should work', () => {
-            expect(getPriority('p')).toBe(16)
-            expect(getPriority('L')).toBe(38)
-            expect(getPriority('P')).toBe(42)
-            expect(getPriority('v')).toBe(22)
-            expect(getPriority('t')).toBe(20)
-            expect(getPriority('s')).toBe(19)
+        test.each([
+            ['p', 16],
+            ['L', 38],
+            ['P', 42],
+            ['v', 22],
+            ['t', 20],
+            ['s', 19],
+        ])('example should work', (value, expected) => {
+            expect(getPriority(value)).toEqual(expected)
         })
     })
 
     describe('findItemInBothCompartments', () => {
-        test('should correctly find the item in both compartments', () => {
-            expect(findItemInBothCompartments('vJrwpWtwJgWrhcsFMMfFFhFp')).toBe(
-                'p'
-            )
-            expect(
-                findItemInBothCompartments('jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL')
-            ).toBe('L')
-            expect(findItemInBothCompartments('PmmdzqPrVvPwwTWBwg')).toBe('P')
-            expect(
-                findItemInBothCompartments('wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn')
-            ).toBe('v')
-            expect(findItemInBothCompartments('ttgJtRGJQctTZtZT')).toBe('t')
-            expect(findItemInBothCompartments('CrZsJsPPZsGzwwsLwLmpwMDw')).toBe(
-                's'
-            )
-        })
+        test.each([
+            ['vJrwpWtwJgWrhcsFMMfFFhFp', 'p'],
+            ['jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL', 'L'],
+            ['PmmdzqPrVvPwwTWBwg', 'P'],
+            ['wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn', 'v'],
+            ['ttgJtRGJQctTZtZT', 't'],
+            ['CrZsJsPPZsGzwwsLwLmpwMDw', 's'],
+        ])(
+            'should correctly find the item in both compartments',
+            (value, expected) => {
+                expect(findItemInBothCompartments(value)).toEqual(expected)
+            }
+        )
     })
 
     describe('findBadge', () => {
