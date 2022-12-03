@@ -1,4 +1,11 @@
-import { chunk, concat, rotate, transpose, zip } from './transformations'
+import {
+    chunk,
+    concat,
+    getCommon,
+    rotate,
+    transpose,
+    zip,
+} from './transformations'
 
 describe('Utils - Array - Transformations', () => {
     describe('chunk', () => {
@@ -102,6 +109,28 @@ describe('Utils - Array - Transformations', () => {
             ]
 
             expect(zip(a, b)).toEqual(expected)
+        })
+    })
+
+    describe('getCommon', () => {
+        test('should correctly find common item amongst arrays', () => {
+            const a = [1, 2, 3]
+            const b = [4, 5, 2, 6]
+            const c = [9, 8, 7, 2]
+
+            expect(getCommon([a, b, c])).toEqual([2])
+        })
+
+        test('should correctly find common items amongst arrays', () => {
+            const a = [1, 2, 3, 6]
+            const b = [4, 5, 2, 6]
+            const c = [9, 8, 7, 2, 6]
+            const d = [6, 7, 3, 1, 2]
+
+            const result = getCommon([a, b, c, d])
+            expect(result).toHaveLength(2)
+            expect(result).toContain(2)
+            expect(result).toContain(6)
         })
     })
 })

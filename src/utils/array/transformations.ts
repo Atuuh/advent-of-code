@@ -22,5 +22,10 @@ export const rotate = <T>(
 export const concat = (...arrays: any[][]): any[] =>
     arrays.reduce((acc, array) => acc.concat(array), [])
 
-export const zip = <A, B>(a: A[], b: B[]): Array<[A, B]> =>
+export const zip = <A, B>(a: A[], b: B[]): [A, B][] =>
     a.map((value, index) => [value, b[index]])
+
+export const getCommon = <T>(arrays: T[][]): T[] =>
+    arrays.reduce((common, array) =>
+        common.filter((item) => array.includes(item))
+    )
