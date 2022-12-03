@@ -7,7 +7,10 @@
     "private": true,
     "scripts": {
         "test": "jest",
-        "lint": "eslint \"src/**/*.ts\""
+        "lint": "eslint \"src/**/*.ts\"",
+        "format": "prettier --write .",
+        "generate-day": "ts-node ./scripts/generate-day.ts",
+        "postgenerate-day": "npm run format"
     },
     "devDependencies": {
         "@types/jest": "^27.0.2",
