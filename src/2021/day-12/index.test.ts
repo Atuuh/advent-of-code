@@ -2,7 +2,7 @@ import { getCaveNetwork } from '.'
 
 describe('2021 - Day 12', () => {
     describe('Part One', () => {
-        test.todo('example should work', () => {
+        test.failing('example should work', () => {
             const input = [
                 'start-A',
                 'start-b',
