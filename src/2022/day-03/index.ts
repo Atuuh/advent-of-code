@@ -1,4 +1,5 @@
-import { chunk, getCommon } from '#utils/array/transformations'
+import { intersection } from '#utils/array/set'
+import { chunk } from '#utils/array/transformations'
 
 export const getPriority = (char: string): number => {
     const a = char.charCodeAt(0) - 96
@@ -7,7 +8,7 @@ export const getPriority = (char: string): number => {
 }
 
 export const findItemInBothCompartments = (items: string): string =>
-    getCommon(chunk(items.split(''), items.length / 2))[0]
+    intersection(chunk(items.split(''), items.length / 2))[0]
 
 export const findBadge = (group: [string, string, string]): string =>
-    getCommon(group.map((item) => item.split('')))[0]
+    intersection(group.map((item) => item.split('')))[0]
