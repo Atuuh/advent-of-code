@@ -63,7 +63,7 @@ const writeFiles = async () => {
     await mkdir(path)
 
     await writeFile(resolve(path, 'index.ts'), '\n')
-    await writeFile(resolve(path, 'input.ts'), '\n')
+    await writeFile(resolve(path, 'input.txt'), '\n')
     await writeFile(
         resolve(path, 'solution.ts'),
         replacePlaceholderText(year, day, solutionFile)
