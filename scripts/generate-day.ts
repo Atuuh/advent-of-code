@@ -61,7 +61,6 @@ const replacePlaceholderText = (year: number, day: number, fileText: string) =>
 
 const writeFiles = async () => {
     await mkdir(path)
-
     await writeFile(resolve(path, 'index.ts'), '\n')
     await writeFile(resolve(path, 'input.txt'), '\n')
     await writeFile(
