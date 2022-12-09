@@ -1,4 +1,4 @@
-import { getVisibleTrees, getVisibleTreesFrom } from '.'
+import { getScenicScore, getVisibleTrees, getVisibleTreesFrom } from '.'
 
 describe('2022 - Day 8', () => {
     describe('Part One', () => {
@@ -106,6 +106,32 @@ describe('2022 - Day 8', () => {
 
             const projection = getVisibleTreesFrom(grid, 'down')
             expect(projection).toEqual(expected)
+        })
+    })
+
+    describe('getScenicScore', () => {
+        test('first example should work', () => {
+            const grid = [
+                [3, 0, 3, 7, 3],
+                [2, 5, 5, 1, 2],
+                [6, 5, 3, 3, 2],
+                [3, 3, 5, 4, 9],
+                [3, 5, 3, 9, 0],
+            ]
+
+            expect(getScenicScore(grid, 1, 2)).toBe(4)
+        })
+
+        test('second example should work', () => {
+            const grid = [
+                [3, 0, 3, 7, 3],
+                [2, 5, 5, 1, 2],
+                [6, 5, 3, 3, 2],
+                [3, 3, 5, 4, 9],
+                [3, 5, 3, 9, 0],
+            ]
+
+            expect(getScenicScore(grid, 3, 2)).toBe(8)
         })
     })
 })

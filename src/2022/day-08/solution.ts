@@ -1,5 +1,7 @@
+import { map } from '#utils/array/2d'
+import { max } from '#utils/array/reducers'
 import { parseAndSolve } from '#utils/solve'
-import { getVisibleTrees } from '.'
+import { getScenicScore, getVisibleTrees } from '.'
 
 const inputTo2DArray =
     <T>(mapFn: (value: string) => T = (value: any) => value) =>
@@ -19,4 +21,7 @@ solve(
 )
 
 // Part Two
-solve(() => 0, 'Part Two:')
+solve((grid) => {
+    const mapped = map((item, x, y) => getScenicScore(grid, y, x))(grid)
+    return mapped.flat().reduce(max)
+}, 'Part Two:')
