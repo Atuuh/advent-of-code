@@ -22,6 +22,8 @@ solve(
 
 // Part Two
 solve((grid) => {
-    const mapped = map((item, x, y) => getScenicScore(grid, y, x))(grid)
+    const mapped = grid.map((col, y) =>
+        col.map((item, x) => getScenicScore(grid, y, x))
+    )
     return mapped.flat().reduce(max)
 }, 'Part Two:')

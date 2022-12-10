@@ -1,3 +1,4 @@
+import { map } from '#utils/array/2d'
 import { getScenicScore, getVisibleTrees, getVisibleTreesFrom } from '.'
 
 describe('2022 - Day 8', () => {
@@ -132,6 +133,28 @@ describe('2022 - Day 8', () => {
             ]
 
             expect(getScenicScore(grid, 3, 2)).toBe(8)
+        })
+
+        test('all examples should work', () => {
+            const grid = [
+                [3, 0, 3, 7, 3],
+                [2, 5, 5, 1, 2],
+                [6, 5, 3, 3, 2],
+                [3, 3, 5, 4, 9],
+                [3, 5, 3, 9, 0],
+            ]
+
+            const expected = [
+                [0, 0, 0, 0, 0],
+                [0, 1, 4, 1, 0],
+                [0, 6, 1, 2, 0],
+                [0, 1, 8, 3, 0],
+                [0, 0, 0, 0, 0],
+            ]
+            const mapped = grid.map((col, y) =>
+                col.map((item, x) => getScenicScore(grid, y, x))
+            )
+            expect(mapped).toEqual(expect.arrayContaining(expected))
         })
     })
 })

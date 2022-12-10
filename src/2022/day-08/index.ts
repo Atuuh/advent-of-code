@@ -20,19 +20,17 @@ export const getScenicScore = (
     x: number
 ): number => {
     const view = getView(grid, y, x)
-    const kept = view.map((v) =>
-        v
-            .reduce(
-                ({ keptItems, lowest }, item) => ({
-                    keptItems: [...keptItems, lowest >= 0 ? item : null],
-                    lowest: item >= lowest ? -1 : item < lowest ? item : lowest,
-                }),
-                { keptItems: [], lowest: grid[y][x] } as {
-                    keptItems: (null | number)[]
-                    lowest: number
-                }
-            )
-            .keptItems.filter((item): item is number => item !== null)
+    const thisTree = grid[y][x]
+    const kept = view.map((line) =>
+        line.reduce((array, item, i, arr) => {
+            if (item >= thisTree && array.every((k) => k < thisTree)) {
+                return [...array, item]
+            } else if (item >= thisTree || array.some((k) => k >= thisTree)) {
+                return array
+            } else {
+                return [...array, item]
+            }
+        }, [] as number[])
     )
     return kept.map((line) => line.length).reduce(product)
 }
