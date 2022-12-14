@@ -38,23 +38,13 @@ const move = (
     return nodePositions.map((nodes, index) => [...nodes, newRope[index]])
 }
 
-const moveTail = (tail: Position, head: Position): Position => {
-    if (areTouching(tail, head)) {
-        return tail
-    }
-    const xVector = tail.x - head.x < 0 ? 1 : -1
-    const yVector = tail.y - head.y < 0 ? 1 : -1
-    if (tail.x === head.x) {
-        return { x: tail.x, y: tail.y + yVector }
-    }
-    if (tail.y === head.y) {
-        return { x: tail.x + xVector, y: tail.y }
-    }
-    return {
-        x: tail.x + xVector,
-        y: tail.y + yVector,
-    }
-}
+const moveTail = (tail: Position, head: Position): Position =>
+    areTouching(tail, head)
+        ? tail
+        : {
+              x: tail.x + Math.sign(head.x - tail.x),
+              y: tail.y + Math.sign(head.y - tail.y),
+          }
 
 export type Command = [Direction, number]
 
