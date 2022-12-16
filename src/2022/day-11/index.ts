@@ -71,6 +71,27 @@ const processRound = (
     return monkeys
 }
 
+const processHardRounds = (
+    monkeys: Monkey[],
+    monkey: Monkey,
+    currentMonkey: number
+) => {
+    for (const item of monkey.items) {
+        const newWorryLevel = monkey.operation(item)
+        const decreasedLevel = newWorryLevel //Math.floor(newWorryLevel / 3)
+        const result = Number.isInteger(decreasedLevel / monkey.test)
+        if (result) {
+            monkeys[monkey.pass].items.push(decreasedLevel / monkey.test)
+        } else {
+            monkeys[monkey.fail].items.push(decreasedLevel % monkey.test)
+        }
+        monkeys[currentMonkey].itemsThrown += 1
+    }
+    monkeys[currentMonkey].items = []
+
+    return monkeys
+}
+
 export const processRounds = (amount: number, startingMonkeys: Monkey[]) =>
     new Array(amount)
         .fill(null)
