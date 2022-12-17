@@ -13,12 +13,15 @@ describe('2022 - Day 11', () => {
     })
 
     describe('Part Two', () => {
-        test.skip('example should work', () => {
+        test.each([
+            [1, [2, 4, 3, 6]],
+            [20, [99, 97, 8, 103]],
+            [10000, [52166, 47830, 1938, 52013]],
+        ])('example should work', (amount, expected) => {
             const monkeys = parseInput(testInput1)
-            const finalMonkeys = processRounds(10000, monkeys)
-            expect(monkeys).toHaveLength(4)
+            const finalMonkeys = processRounds(amount, monkeys, true)
             expect(finalMonkeys.map((m) => m.itemsThrown)).toEqual(
-                expect.arrayContaining([52166, 47830, 1938, 52013])
+                expect.arrayContaining(expected)
             )
         })
     })

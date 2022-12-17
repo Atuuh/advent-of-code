@@ -1,3 +1,6 @@
+import { max, min } from '#utils/array/reducers'
+import { getPrimeDecomposition, lowestCommonMultiple } from '#utils/number'
+
 const add = (a: number) => (b: number) => a + b
 const multiply = (a: number) => (b: number) => a * b
 
@@ -76,15 +79,12 @@ const processHardRounds = (
     monkey: Monkey,
     currentMonkey: number
 ) => {
+    const mod = lowestCommonMultiple(monkeys.map((m) => m.test))
     for (const item of monkey.items) {
         const newWorryLevel = monkey.operation(item)
-        const decreasedLevel = newWorryLevel //Math.floor(newWorryLevel / 3)
-        const result = Number.isInteger(decreasedLevel / monkey.test)
-        if (result) {
-            monkeys[monkey.pass].items.push(decreasedLevel / monkey.test)
-        } else {
-            monkeys[monkey.fail].items.push(decreasedLevel % monkey.test)
-        }
+        const result = Number.isInteger(newWorryLevel / monkey.test)
+        const targetMonkey = result ? monkey.pass : monkey.fail
+        monkeys[targetMonkey].items.push(newWorryLevel % mod)
         monkeys[currentMonkey].itemsThrown += 1
     }
     monkeys[currentMonkey].items = []
@@ -92,10 +92,17 @@ const processHardRounds = (
     return monkeys
 }
 
-export const processRounds = (amount: number, startingMonkeys: Monkey[]) =>
+export const processRounds = (
+    amount: number,
+    startingMonkeys: Monkey[],
+    hard = false
+) =>
     new Array(amount)
         .fill(null)
         .reduce<Monkey[]>(
-            (monkeys) => monkeys.reduce(processRound, monkeys),
+            (monkeys) =>
+                hard
+                    ? monkeys.reduce(processHardRounds, monkeys)
+                    : monkeys.reduce(processRound, monkeys),
             startingMonkeys
         )

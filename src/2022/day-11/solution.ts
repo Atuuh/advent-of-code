@@ -17,4 +17,12 @@ solve(
 )
 
 // Part Two
-solve(() => 0, 'Part Two:')
+solve(
+    (monkeys) =>
+        processRounds(10000, monkeys, true)
+            .map((monkey) => monkey.itemsThrown)
+            .sort(descending)
+            .slice(0, 2)
+            .reduce(product),
+    'Part Two:'
+)
