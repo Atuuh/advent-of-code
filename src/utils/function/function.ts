@@ -27,3 +27,9 @@ export const flip =
     (b: B) =>
     (a: A) =>
         fn(a)(b)
+
+export const repeat =
+    (amount: number) =>
+    <A>(fn: (a: A) => A) =>
+    (startingValue: A) =>
+        new Array(amount).fill(null).reduce<A>((acc) => fn(acc), startingValue)

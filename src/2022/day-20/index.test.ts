@@ -1,4 +1,4 @@
-import { mix, moveItemInList } from '.'
+import { getNewIndex, mix, moveItemInList } from '.'
 
 describe('2022 - Day 20', () => {
     describe('Part One', () => {
@@ -11,12 +11,16 @@ describe('2022 - Day 20', () => {
             [[1, 2, -3, 0, 3, 4, -2], 3, [1, 2, -3, 0, 3, 4, -2]],
             [[1, 2, -3, 0, 3, 4, -2], 5, [1, 2, -3, 4, 0, 3, -2]],
         ])('moveItemInList', (array, index, expected) => {
-            const result = moveItemInList(array, index)
+            const result = moveItemInList(
+                array,
+                index,
+                getNewIndex(index, array[index], array.length)
+            )
             expect(result).toEqual(expected)
         })
 
         test('should mix correctly', () => {
-            const result = mix([1, 2, -3, 3, -2, 0, 4])
+            const result = mix(1)([1, 2, -3, 3, -2, 0, 4])
             expect(result).toEqual([1, 2, -3, 4, 0, 3, -2])
         })
     })
