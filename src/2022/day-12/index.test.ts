@@ -13,7 +13,7 @@ describe('2022 - Day 12', () => {
             const result = findPath(canClimbTo)(
                 grid,
                 { x: 0, y: 0 },
-                { x: 2, y: 5 }
+                (node) => node.x === 2 && node.y === 5
             )
             expect(result).toHaveLength(32)
         })

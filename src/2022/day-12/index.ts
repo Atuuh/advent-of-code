@@ -9,7 +9,7 @@ export const findPath =
     (
         grid: T[][],
         startingPosition: Vector2,
-        targetPosition: Vector2
+        isTargetPosition: (node: Vector2) => boolean
     ): Vector2[] => {
         const nodeGrid = grid.map((row, x) =>
             row.map<Node>((value, y) => ({
@@ -26,7 +26,7 @@ export const findPath =
             const node = openList.shift() as Node
             node.closed = true
 
-            if (node.x === targetPosition.x && node.y === targetPosition.y) {
+            if (isTargetPosition(node)) {
                 return backtrace(node)
             }
 
