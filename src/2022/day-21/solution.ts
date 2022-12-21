@@ -1,5 +1,5 @@
 import { parseAndSolve } from '#utils/solve'
-import { getValue, parseInput } from '.'
+import { getHumanValue, getValue, parseInput } from '.'
 
 const solve = parseAndSolve(2022, 21, parseInput)
 
@@ -7,4 +7,4 @@ const solve = parseAndSolve(2022, 21, parseInput)
 solve((root) => getValue(root), 'Part One:')
 
 // Part Two
-solve(() => 0, 'Part Two:')
+solve((root) => getHumanValue(root), 'Part Two:')

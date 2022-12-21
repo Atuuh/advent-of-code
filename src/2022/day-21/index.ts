@@ -4,14 +4,16 @@ type ParentNode = {
     right: Node
     operation: Operation
     name: string
+    parent?: Node
 }
 type LeafNode = {
     value: number
     name: string
+    parent: Node
 }
 type Node = ParentNode | LeafNode
 
-type UnlinkedParentNode = Pick<ParentNode, 'name' | 'operation'> & {
+type UnlinkedParentNode = Pick<ParentNode, 'name' | 'operation' | 'parent'> & {
     left: string
     right: string
 }
@@ -42,12 +44,18 @@ const linkNodes = (
         (name) =>
             array.find((n) => n.name === name) as UnlinkedParentNode | Node
     )
-    return {
+
+    const newNode: Node = {
         name: node.name,
         operation: node.operation,
         left: linkNodes(array, leftNode as UnlinkedParentNode),
         right: linkNodes(array, rightNode as UnlinkedParentNode),
     }
+
+    newNode.left.parent = newNode
+    newNode.right.parent = newNode
+
+    return newNode
 }
 
 export const parseInput = (input: string) => {
@@ -78,3 +86,49 @@ export const getValue = (node: Node): number =>
     isLeafNode(node)
         ? node.value
         : doOperation(getValue(node.left), getValue(node.right), node.operation)
+
+const getNode = (name: string, node: Node) => {
+    let nodes: Node[] = [node]
+    while (!nodes.some((n) => n.name === name)) {
+        nodes = nodes.flatMap((n) => (isLeafNode(n) ? n : [n.left, n.right]))
+    }
+    return nodes.find((n) => n.name === name)
+}
+
+const getAllNodesTo = (root: Node, target: string): Node[] => {
+    let node = getNode(target, root) as Node
+    const nodes: Node[] = []
+    while (node?.parent) {
+        nodes.push(node)
+        node = node.parent
+    }
+    return [...nodes, node]
+}
+
+export const getHumanValue = (root: Node): number => {
+    const nodes = getAllNodesTo(root, 'humn').slice(0, -1)
+
+    const left = (root as ParentNode).left
+    const right = (root as ParentNode).right
+
+    const targetValue = nodes.includes(left) ? getValue(right) : getValue(left)
+
+    return nodes.reduceRight((toEqual, node) => {
+        if (isLeafNode(node)) {
+            return toEqual
+        }
+        const isRightFixed = nodes.includes(node.left)
+        const rhs = getValue(isRightFixed ? node.right : node.left)
+
+        switch (node.operation) {
+            case '+':
+                return toEqual - rhs
+            case '-':
+                return isRightFixed ? toEqual + rhs : rhs - toEqual
+            case '*':
+                return toEqual / rhs
+            case '/':
+                return isRightFixed ? toEqual * rhs : rhs / toEqual
+        }
+    }, targetValue)
+}

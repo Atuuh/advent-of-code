@@ -1,4 +1,4 @@
-import { getValue, parseInput } from '.'
+import { getHumanValue, getValue, parseInput } from '.'
 
 describe('2022 - Day 21', () => {
     describe('Part One', () => {
@@ -9,7 +9,10 @@ describe('2022 - Day 21', () => {
     })
 
     describe('Part Two', () => {
-        test.todo('example should work')
+        test('example should work', () => {
+            const root = parseInput(testInput1)
+            expect(getHumanValue(root)).toBe(301)
+        })
     })
 })
 
